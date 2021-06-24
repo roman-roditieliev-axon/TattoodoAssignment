@@ -41,13 +41,9 @@ import Foundation
                             return
                         }
                         do {
-                            print(responseData)
-                            let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
-                            print(jsonData)
                             let apiResponse = try JSONDecoder().decode(PostsResponse.self, from: responseData)
                             completion(apiResponse,nil)
                         }catch {
-                            print(error)
                             completion(nil, NetworkResponse.unableToDecode.rawValue)
                         }
                     case .failure(let networkFailureError):
@@ -72,13 +68,9 @@ import Foundation
                             return
                         }
                         do {
-                            print(responseData)
-                            let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
-                            print(jsonData)
                             let apiResponse = try JSONDecoder().decode(PostDetailData.self, from: responseData)
                             completion(apiResponse,nil)
                         } catch {
-                            print(error)
                             completion(nil, NetworkResponse.unableToDecode.rawValue)
                         }
                     case .failure(let networkFailureError):

@@ -41,14 +41,11 @@ class Router<EndPoint: RequestType>: NetworkRouter {
         var request = URLRequest(url: route.baseURL.appendingPathComponent(route.path),
                                  cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
                                  timeoutInterval: 10.0)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         switch route.task {
         case .request:
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            break
         case .requestWithParameters(let bodyParameters, let urlParameters):
-            print(bodyParameters)
-            print(urlParameters)
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
             try self.configureParameters(bodyParameters: bodyParameters,
                                          urlParameters: urlParameters,
                                          request: &request)

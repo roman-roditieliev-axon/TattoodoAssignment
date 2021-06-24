@@ -19,6 +19,8 @@
 		CE02BC4C268470C4005B6145 /* URLParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC4B268470C4005B6145 /* URLParameterEncoding.swift */; };
 		CE02BC5026847107005B6145 /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC4F26847107005B6145 /* JSONParameterEncoder.swift */; };
 		CE02BC6B26847EAC005B6145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE02BC6A26847EAC005B6145 /* Assets.xcassets */; };
+		CE02BC752684B9CF005B6145 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC742684B9CF005B6145 /* Coordinator.swift */; };
+		CE02BC792684BA27005B6145 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC782684BA27005B6145 /* AppCoordinator.swift */; };
 		CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3260F26843F4A00A6E884 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +37,8 @@
 		CE02BC4B268470C4005B6145 /* URLParameterEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParameterEncoding.swift; sourceTree = "<group>"; };
 		CE02BC4F26847107005B6145 /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
 		CE02BC6A26847EAC005B6145 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CE02BC742684B9CF005B6145 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		CE02BC782684BA27005B6145 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		CE634FF726833F8100EF0E27 /* TattoodoAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TattoodoAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE634FFA26833F8100EF0E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEC3260F26843F4A00A6E884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,11 +65,21 @@
 			path = Encoding;
 			sourceTree = "<group>";
 		};
+		CE02BC722684B9A7005B6145 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				CE02BC742684B9CF005B6145 /* Coordinator.swift */,
+				CE02BC782684BA27005B6145 /* AppCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		CE634FEA26833F8000EF0E27 = {
 			isa = PBXGroup;
 			children = (
 				CEC3260F26843F4A00A6E884 /* AppDelegate.swift */,
 				CE634FFA26833F8100EF0E27 /* Info.plist */,
+				CE02BC722684B9A7005B6145 /* Coordinator */,
 				CEC326172684429400A6E884 /* Network */,
 				CEC32616268440A000A6E884 /* Controllers */,
 				CEC326142684407D00A6E884 /* Models */,
@@ -198,9 +212,11 @@
 			files = (
 				CE02BC4126846E94005B6145 /* NetworkLogger.swift in Sources */,
 				CE02BC4426846EC8005B6145 /* NetworkRouter.swift in Sources */,
+				CE02BC752684B9CF005B6145 /* Coordinator.swift in Sources */,
 				CE02BC4C268470C4005B6145 /* URLParameterEncoding.swift in Sources */,
 				CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */,
 				CE02BC2D26845657005B6145 /* PostModel.swift in Sources */,
+				CE02BC792684BA27005B6145 /* AppCoordinator.swift in Sources */,
 				CE02BC2A26845183005B6145 /* NetworkManager.swift in Sources */,
 				CE02BC4826847086005B6145 /* ParameterEncoding.swift in Sources */,
 				CE02BC3526845D26005B6145 /* PostsResponseModel.swift in Sources */,

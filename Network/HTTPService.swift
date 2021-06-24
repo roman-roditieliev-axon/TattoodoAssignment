@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - RequestType
 protocol RequestType {
     var baseURL: URL { get }
     var path: String { get }
@@ -14,12 +15,15 @@ protocol RequestType {
     var task: HTTPTask { get }
 }
 
+// MARK: - HTTPParameters
 public typealias HTTPParameters = [String: Any]
 
+// MARK: - HTTPMethod
 enum HTTPMethod: String {
     case get = "GET"
 }
 
+// MARK: - HTTPTask
 enum HTTPTask {
     case request
     case requestWithParameters(bodyParameters: HTTPParameters?, urlParameters: HTTPParameters?)
