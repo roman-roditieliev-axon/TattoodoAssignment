@@ -10,6 +10,7 @@
 		CE63500326833F8100EF0E27 /* TattoodoAssignmentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE634FF026833F8000EF0E27 /* TattoodoAssignmentApp.swift */; };
 		CE63500526833F8100EF0E27 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE634FF126833F8000EF0E27 /* ContentView.swift */; };
 		CE63500726833F8100EF0E27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE634FF226833F8100EF0E27 /* Assets.xcassets */; };
+		CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3260F26843F4A00A6E884 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +19,7 @@
 		CE634FF226833F8100EF0E27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE634FF726833F8100EF0E27 /* TattoodoAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TattoodoAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE634FFA26833F8100EF0E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEC3260F26843F4A00A6E884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,8 +36,13 @@
 		CE634FEA26833F8000EF0E27 = {
 			isa = PBXGroup;
 			children = (
+				CEC3260F26843F4A00A6E884 /* AppDelegate.swift */,
+				CE634FFA26833F8100EF0E27 /* Info.plist */,
+				CEC326172684429400A6E884 /* NetworkService */,
+				CEC32616268440A000A6E884 /* Controllers */,
+				CEC326142684407D00A6E884 /* Models */,
+				CEC326152684408300A6E884 /* ViewModels */,
 				CE634FEF26833F8000EF0E27 /* Shared */,
-				CE634FF926833F8100EF0E27 /* iOS */,
 				CE634FF826833F8100EF0E27 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,12 +65,32 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CE634FF926833F8100EF0E27 /* iOS */ = {
+		CEC326142684407D00A6E884 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CE634FFA26833F8100EF0E27 /* Info.plist */,
 			);
-			path = iOS;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CEC326152684408300A6E884 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		CEC32616268440A000A6E884 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CEC326172684429400A6E884 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NetworkService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,6 +161,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */,
 				CE63500526833F8100EF0E27 /* ContentView.swift in Sources */,
 				CE63500326833F8100EF0E27 /* TattoodoAssignmentApp.swift in Sources */,
 			);
@@ -193,6 +221,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -246,6 +275,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -260,7 +290,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -281,7 +311,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
