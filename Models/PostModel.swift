@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct PostList: Decodable {
+    let data: Post
+}
+
 struct Post: Decodable {
     let id: Int
     let description: String

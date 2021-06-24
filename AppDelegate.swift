@@ -15,7 +15,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        
+        networkManager.getPostById(postId: 447698) { (post, error) in
+            print("success")
+        }
+
         networkManager.getPosts(page: 1) { posts, error in
             print("success")
         }

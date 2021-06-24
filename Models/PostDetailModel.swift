@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct PostDetailData: Decodable {
+    let data: PostDetail
+}
+
 struct PostDetail: Decodable {
     let id: Int
     let artist: Artist
@@ -17,6 +21,10 @@ struct Artist: Decodable {
     let id: Int
     let name: String
     let imageUrl: String
+    
+    private enum CodingKeys : String, CodingKey {
+        case imageUrl = "image_url", name, id
+    }
 }
 
 struct Counts: Decodable {

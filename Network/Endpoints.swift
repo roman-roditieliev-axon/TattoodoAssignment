@@ -23,7 +23,7 @@ extension PostsEndpoints {
     var path: String {
         switch self {
         case .getPosts:
-            return "/feeds"
+            return "/feeds/explore/"
         case .getPostDetails(let postId):
             return "/posts/\(postId)"
         }
@@ -35,7 +35,7 @@ extension PostsEndpoints {
         switch self {
         case .getPostDetails: return .request
         case .getPosts(let page):
-            return .requestWithParameters(bodyParameters: nil, bodyEncoding: ParameterEncoding.urlAndJsonEncoding, urlParameters: ["page": page])
+            return .requestWithParameters(bodyParameters: nil, urlParameters: ["page": page])
         }
     }
 }

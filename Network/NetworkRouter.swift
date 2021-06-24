@@ -44,20 +44,28 @@ class Router<EndPoint: RequestType>: NetworkRouter {
         switch route.task {
         case .request:
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        case .requestWithParameters(let bodyParameters, let bodyEncoding, let urlParameters):
-            do {
-                switch bodyEncoding {
-                case .jsonEncoding:
-                    try JSONParameterEncoder().encode(urlRequest: &request, with: bodyParameters ?? HTTPParameters())
-                case .urlEncoding:
-                    try JSONParameterEncoder().encode(urlRequest: &request, with: urlParameters ?? HTTPParameters())
-                case .urlAndJsonEncoding:
-                    break
-                }
-            } catch {
-                throw error
-            }
+        case .requestWithParameters(let bodyParameters, let urlParameters):
+            print(bodyParameters)
+            print(urlParameters)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            try self.configureParameters(bodyParameters: bodyParameters,
+                                         urlParameters: urlParameters,
+                                         request: &request)
         }
         return request
+    }
+    
+    fileprivate func configureParameters(bodyParameters: Parameters?, urlParameters: Parameters?, request: inout URLRequest) throws {
+        do {
+            if let bodyParameters = bodyParameters {
+                try JSONParameterEncoder().encode(urlRequest: &request, with: bodyParameters)
+            }
+            if let urlParameters = urlParameters {
+                try URLParameterEncoder().encode(urlRequest: &request, with: urlParameters)
+            }
+        } catch {
+            throw error
+        }
     }
 }

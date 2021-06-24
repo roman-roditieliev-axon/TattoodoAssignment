@@ -8,5 +8,26 @@
 import Foundation
 
 struct PostsResponse: Decodable {
-    var data: [Post]
+    let data: [PostList]
+    let meta: ResponseMetadata
+}
+
+struct ResponseMetadata: Decodable {
+    let pagination: PaginationMeta
+}
+
+struct PaginationMeta: Decodable {
+    let total: Int
+    let count: Int
+    let perPage: Int
+    let currentPage: Int
+    let totalPages: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case perPage = "per_page"
+        case currentPage = "current_page"
+        case totalPages = "total_pages"
+        case total
+        case count
+    }
 }

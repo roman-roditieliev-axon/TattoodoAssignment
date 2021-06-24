@@ -25,7 +25,7 @@ import Foundation
     struct NetworkManager {
         let router = Router<PostsEndpoints>()
         
-        func getPosts(page: Int, completion: @escaping (_ posts: [Post]?,_ error: String?)->()){
+        func getPosts(page: Int, completion: @escaping (_ posts: PostsResponse?,_ error: String?)->()){
             router.request(.getPosts(page: page)) { data, response, error in
                 
                 if error != nil {
@@ -45,8 +45,39 @@ import Foundation
                             let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
                             print(jsonData)
                             let apiResponse = try JSONDecoder().decode(PostsResponse.self, from: responseData)
-                            completion(apiResponse.data,nil)
+                            completion(apiResponse,nil)
                         }catch {
+                            print(error)
+                            completion(nil, NetworkResponse.unableToDecode.rawValue)
+                        }
+                    case .failure(let networkFailureError):
+                        completion(nil, networkFailureError)
+                    }
+                }
+            }
+        }
+        
+        func getPostById(postId: Int, completion: @escaping (_ posts: PostDetailData?,_ error: String?)->()){
+            router.request(.getPostDetails(postId: postId)) { data, response, error in
+                if error != nil {
+                    completion(nil, "Please check your network connection.")
+                }
+                
+                if let response = response as? HTTPURLResponse {
+                    let result = self.handleNetworkResponse(response)
+                    switch result {
+                    case .success:
+                        guard let responseData = data else {
+                            completion(nil, NetworkResponse.noData.rawValue)
+                            return
+                        }
+                        do {
+                            print(responseData)
+                            let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                            print(jsonData)
+                            let apiResponse = try JSONDecoder().decode(PostDetailData.self, from: responseData)
+                            completion(apiResponse,nil)
+                        } catch {
                             print(error)
                             completion(nil, NetworkResponse.unableToDecode.rawValue)
                         }

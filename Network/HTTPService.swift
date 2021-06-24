@@ -22,5 +22,5 @@ enum HTTPMethod: String {
 
 enum HTTPTask {
     case request
-    case requestWithParameters(bodyParameters: HTTPParameters?, bodyEncoding: ParameterEncoding, urlParameters: HTTPParameters?)
+    case requestWithParameters(bodyParameters: HTTPParameters?, urlParameters: HTTPParameters?)
 }
