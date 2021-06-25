@@ -32,10 +32,6 @@ class PostsListViewController: UIViewController {
         super.viewDidLoad()
         viewModel.delegate = self
         viewModel.getPosts()
-        if let layout = postsCollectionView.collectionViewLayout as? PinterestLayout {
-          layout.delegate = self
-        }
-        
         setupNavigationBar()
         setupLayout()
         setupViews()
@@ -85,6 +81,10 @@ class PostsListViewController: UIViewController {
         postsCollectionView.collectionViewLayout = customFlowLayout
         postsCollectionView.contentInsetAdjustmentBehavior = .always
         postsCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: "PostCollectionViewCell")
+        
+        if let layout = postsCollectionView.collectionViewLayout as? PinterestLayout {
+          layout.delegate = self
+        }
     }
     
     // MARK: - Actions
@@ -111,9 +111,9 @@ extension PostsListViewController: MainViewUpdater {
     }
 }
 
-// MARK: - PostsListViewController UICollectionViewDataSource
+// MARK: - PostsListViewController UICollectionViewDataSource, UICollectionViewDelegate
 
-extension PostsListViewController : UICollectionViewDataSource {
+extension PostsListViewController : UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numberOfPosts()
     }
@@ -126,20 +126,13 @@ extension PostsListViewController : UICollectionViewDataSource {
     }
 }
 
-// MARK: - PostsListViewController  UICollectionViewDelegate
-
-extension PostsListViewController : UICollectionViewDelegate {
-    
-}
-
-
 // MARK: - PostsListViewController  PinterestLayoutDelegate
 
 extension PostsListViewController: PinterestLayoutDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
         heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-        return 200
+        return CGFloat(viewModel.post(at: indexPath).data.image.height)/5
     }
 }
 

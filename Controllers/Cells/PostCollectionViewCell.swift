@@ -23,7 +23,9 @@ class PostCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         contentView.addSubview(imageView)
         imageView.backgroundColor = .red
+        imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -34,6 +36,6 @@ class PostCollectionViewCell: UICollectionViewCell {
     }
     
     func setupCell(post: PostList) {
-        
+        imageView.imageFromUrl(urlString: post.data.image.url)
     }
 }

@@ -15,7 +15,6 @@ protocol PostsListPresenterProtocol: class {
 
 class PostsListViewModel:  PostsListPresenterProtocol {
  
-    
     private let networkManager: NetworkManager
     private var posts: [PostList] = []
     weak var delegate: MainViewUpdater?
