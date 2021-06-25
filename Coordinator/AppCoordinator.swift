@@ -23,7 +23,6 @@ class AppCoordinator: Coordinator {
 
     override func start() {
         guard let window = window else { return }
-        window.backgroundColor = .red
         let rootNC = UINavigationController(rootViewController: rootViewController)
         window.rootViewController = rootNC
         window.makeKeyAndVisible()

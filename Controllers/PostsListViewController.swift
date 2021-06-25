@@ -28,28 +28,24 @@ class PostsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setupNavigationBar()
-        view.backgroundColor = .blue
-//        setupLayout()
-//        setupViews()
+        setupNavigationBar()
+        setupLayout()
+        setupViews()
     }
     
     // MARK: - setup vc
     private func setupNavigationBar() {
-        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
-        navigationBar.barTintColor = UIColor.lightGray
-        view.addSubview(navigationBar)
-        
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: nil)
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: nil)
-        
-        let navigationItem = UINavigationItem(title: "Home")
-        navigationItem.leftBarButtonItem = cancelButton
-        navigationItem.rightBarButtonItem = doneButton
-        
-        navigationBar.items = [navigationItem]
+        self.title = "Tattoo List"
+        self.navigationController?.navigationBar.barTintColor = .lightGray
+        let leftButton = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(leftNavigationButtonAction))
+        let rightButton = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action:  #selector(rightNavigationButtonAction))
+        leftButton.tintColor = .black
+        rightButton.tintColor = .black
+
+        self.navigationItem.rightBarButtonItem  = rightButton
+        self.navigationItem.leftBarButtonItem  = leftButton
     }
-    
+
     private func setupLayout() {
         view.addSubview(postsCollectionView)
         view.addSubview(activityIndicator)
@@ -73,10 +69,11 @@ class PostsListViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = .white
-        
+
         postsCollectionView.dataSource = self
         postsCollectionView.delegate = self
         postsCollectionView.delaysContentTouches = false
+        postsCollectionView.backgroundColor = .white
         customFlowLayout.sectionInsetReference = .fromContentInset
         customFlowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         customFlowLayout.minimumInteritemSpacing = 10
@@ -85,6 +82,15 @@ class PostsListViewController: UIViewController {
         customFlowLayout.headerReferenceSize = CGSize(width: 0, height: 40)
         postsCollectionView.collectionViewLayout = customFlowLayout
         postsCollectionView.contentInsetAdjustmentBehavior = .always
+    }
+    
+    // MARK: - Actions
+    @objc private func leftNavigationButtonAction() {
+        
+    }
+    
+    @objc private func rightNavigationButtonAction() {
+        
     }
 }
 
