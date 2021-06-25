@@ -12,9 +12,9 @@ class AppCoordinator: Coordinator {
     // MARK: - Properties
     let window: UIWindow?
     
-    var rootViewController: PostsListViewController {
+    lazy var rootViewController: PostsListViewController = {
         return PostsListViewController()
-    }
+    }()
 
     // MARK: - Coordinator
     init(window: UIWindow?) {
@@ -23,12 +23,10 @@ class AppCoordinator: Coordinator {
 
     override func start() {
         guard let window = window else { return }
-        
+        window.backgroundColor = .red
         let rootNC = UINavigationController(rootViewController: rootViewController)
         window.rootViewController = rootNC
         window.makeKeyAndVisible()
-        rootNC.pushViewController(rootViewController, animated: true)
-//        rootNC.present(rootViewController, animated: false, completion: nil)
     }
 
     override func finish() {

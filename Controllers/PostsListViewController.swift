@@ -28,9 +28,10 @@ class PostsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
-        setupLayout()
-        setupViews()
+//        setupNavigationBar()
+        view.backgroundColor = .blue
+//        setupLayout()
+//        setupViews()
     }
     
     // MARK: - setup vc
