@@ -27,6 +27,8 @@ class AppCoordinator: Coordinator {
         let rootNC = UINavigationController(rootViewController: rootViewController)
         window.rootViewController = rootNC
         window.makeKeyAndVisible()
+        rootNC.pushViewController(rootViewController, animated: true)
+//        rootNC.present(rootViewController, animated: false, completion: nil)
     }
 
     override func finish() {
