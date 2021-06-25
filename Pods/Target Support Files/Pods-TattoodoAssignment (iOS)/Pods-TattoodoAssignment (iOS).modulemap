@@ -1,0 +1,6 @@
+framework module Pods_TattoodoAssignment__iOS_ {
+  umbrella header "Pods-TattoodoAssignment (iOS)-umbrella.h"
+
+  export *
+  module * { export * }
+}
