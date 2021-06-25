@@ -11,11 +11,10 @@ class AppCoordinator: Coordinator {
     
     // MARK: - Properties
     let window: UIWindow?
-    
     lazy var rootViewController: PostsListViewController = {
         return PostsListViewController()
     }()
-
+ 
     // MARK: - Coordinator
     init(window: UIWindow?) {
         self.window = window

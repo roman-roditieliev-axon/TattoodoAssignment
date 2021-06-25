@@ -16,7 +16,9 @@ class PostsListViewController: UIViewController {
     
     private var activityIndicator = UIActivityIndicatorView(style: .medium)
     private let postsCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    private let customFlowLayout = CustomFlowLayout()
+    private let customFlowLayout = PinterestLayout()
+    var viewModel: PostsListViewModel = PostsListViewModel(networkManager: NetworkManager())
+    // MARK: - Init
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -28,6 +30,12 @@ class PostsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.delegate = self
+        viewModel.getPosts()
+        if let layout = postsCollectionView.collectionViewLayout as? PinterestLayout {
+          layout.delegate = self
+        }
+        
         setupNavigationBar()
         setupLayout()
         setupViews()
@@ -69,28 +77,23 @@ class PostsListViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = .white
-
+        
         postsCollectionView.dataSource = self
         postsCollectionView.delegate = self
         postsCollectionView.delaysContentTouches = false
         postsCollectionView.backgroundColor = .white
-        customFlowLayout.sectionInsetReference = .fromContentInset
-        customFlowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        customFlowLayout.minimumInteritemSpacing = 10
-        customFlowLayout.minimumLineSpacing = 10
-        customFlowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        customFlowLayout.headerReferenceSize = CGSize(width: 0, height: 40)
         postsCollectionView.collectionViewLayout = customFlowLayout
         postsCollectionView.contentInsetAdjustmentBehavior = .always
+        postsCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: "PostCollectionViewCell")
     }
     
     // MARK: - Actions
     @objc private func leftNavigationButtonAction() {
-        
+        print("left button did tap")
     }
     
     @objc private func rightNavigationButtonAction() {
-        
+        print("right button did tap")
     }
 }
 
@@ -102,7 +105,9 @@ extension PostsListViewController: MainViewUpdater {
     }
     
     func reload() {
-        postsCollectionView.reloadData()
+        DispatchQueue.main.async {
+            self.postsCollectionView.reloadData()
+        }
     }
 }
 
@@ -110,11 +115,14 @@ extension PostsListViewController: MainViewUpdater {
 
 extension PostsListViewController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return viewModel.numberOfPosts()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostCollectionViewCell", for: indexPath) as! PostCollectionViewCell
+        cell.setupCell(post: viewModel.post(at: indexPath))
+        cell.contentView.layer.cornerRadius = 20
+        return cell
     }
 }
 
@@ -122,5 +130,16 @@ extension PostsListViewController : UICollectionViewDataSource {
 
 extension PostsListViewController : UICollectionViewDelegate {
     
+}
+
+
+// MARK: - PostsListViewController  PinterestLayoutDelegate
+
+extension PostsListViewController: PinterestLayoutDelegate {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
+        return 200
+    }
 }
 

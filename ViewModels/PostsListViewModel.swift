@@ -7,27 +7,38 @@
 
 import Foundation
 
-struct PostsListViewModel {
-    private let post: Post
+protocol PostsListPresenterProtocol: class {
+    func getPosts()
+    func numberOfPosts() -> Int
+    func post(at indexPath: IndexPath) -> PostList
+}
+
+class PostsListViewModel:  PostsListPresenterProtocol {
+ 
     
-    let imageUrl: URL?
-    
-    let artistName: String
-        
-    let description: String?
-    
+    private let networkManager: NetworkManager
+    private var posts: [PostList] = []
+    weak var delegate: MainViewUpdater?
+
     // MARK: - Init
+    init(networkManager: NetworkManager) {
+        self.networkManager = networkManager
+    }
     
-    init(post: Post) {
-        self.post = post
-        
-        artistName = ""
-        description = post.description
-        
-        if let imageUrl = URL(string:post.image.url) {
-            self.imageUrl = imageUrl
-        } else {
-            self.imageUrl = nil
+    func numberOfPosts() -> Int {
+        return self.posts.count
+    }
+    
+    func post(at indexPath: IndexPath) -> PostList {
+        return self.posts[indexPath.row]
+    }
+    
+    func getPosts() {
+        self.networkManager.getPosts(page: 1) { (posts, error) in
+            if let strPosts = posts?.data {
+                self.posts = strPosts
+                self.delegate?.reload()
+            }
         }
     }
 }
