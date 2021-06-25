@@ -21,6 +21,10 @@
 		CE02BC6B26847EAC005B6145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE02BC6A26847EAC005B6145 /* Assets.xcassets */; };
 		CE02BC752684B9CF005B6145 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC742684B9CF005B6145 /* Coordinator.swift */; };
 		CE02BC792684BA27005B6145 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC782684BA27005B6145 /* AppCoordinator.swift */; };
+		CE02BC7C2684C2B9005B6145 /* InputCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC7B2684C2B9005B6145 /* InputCoordinator.swift */; };
+		CE02BC7F26850B6D005B6145 /* PostsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */; };
+		CE02BC8526850F31005B6145 /* PostsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC8426850F31005B6145 /* PostsListViewModel.swift */; };
+		CE02BC8E26859CB0005B6145 /* CustomFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC8D26859CB0005B6145 /* CustomFlowLayout.swift */; };
 		CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3260F26843F4A00A6E884 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +43,10 @@
 		CE02BC6A26847EAC005B6145 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE02BC742684B9CF005B6145 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		CE02BC782684BA27005B6145 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		CE02BC7B2684C2B9005B6145 /* InputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCoordinator.swift; sourceTree = "<group>"; };
+		CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListViewController.swift; sourceTree = "<group>"; };
+		CE02BC8426850F31005B6145 /* PostsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListViewModel.swift; sourceTree = "<group>"; };
+		CE02BC8D26859CB0005B6145 /* CustomFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFlowLayout.swift; sourceTree = "<group>"; };
 		CE634FF726833F8100EF0E27 /* TattoodoAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TattoodoAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE634FFA26833F8100EF0E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEC3260F26843F4A00A6E884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +78,7 @@
 			children = (
 				CE02BC742684B9CF005B6145 /* Coordinator.swift */,
 				CE02BC782684BA27005B6145 /* AppCoordinator.swift */,
+				CE02BC7B2684C2B9005B6145 /* InputCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -118,6 +127,7 @@
 		CEC326152684408300A6E884 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				CE02BC8426850F31005B6145 /* PostsListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -125,6 +135,8 @@
 		CEC32616268440A000A6E884 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */,
+				CE02BC8D26859CB0005B6145 /* CustomFlowLayout.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -219,10 +231,14 @@
 				CE02BC792684BA27005B6145 /* AppCoordinator.swift in Sources */,
 				CE02BC2A26845183005B6145 /* NetworkManager.swift in Sources */,
 				CE02BC4826847086005B6145 /* ParameterEncoding.swift in Sources */,
+				CE02BC7C2684C2B9005B6145 /* InputCoordinator.swift in Sources */,
 				CE02BC3526845D26005B6145 /* PostsResponseModel.swift in Sources */,
+				CE02BC8526850F31005B6145 /* PostsListViewModel.swift in Sources */,
 				CE02BC3126845BEB005B6145 /* PostDetailModel.swift in Sources */,
+				CE02BC7F26850B6D005B6145 /* PostsListViewController.swift in Sources */,
 				CE02BC3B26846299005B6145 /* HTTPService.swift in Sources */,
 				CE02BC3826845EC4005B6145 /* Endpoints.swift in Sources */,
+				CE02BC8E26859CB0005B6145 /* CustomFlowLayout.swift in Sources */,
 				CE02BC5026847107005B6145 /* JSONParameterEncoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

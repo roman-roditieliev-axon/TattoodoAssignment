@@ -12,10 +12,9 @@ class AppCoordinator: Coordinator {
     // MARK: - Properties
     let window: UIWindow?
     
-    lazy var rootViewController: UINavigationController = {
-        return UINavigationController(rootViewController: UIViewController())
-    }()
-
+    var rootViewController: PostsListViewController {
+        return PostsListViewController()
+    }
 
     // MARK: - Coordinator
     init(window: UIWindow?) {
@@ -23,16 +22,14 @@ class AppCoordinator: Coordinator {
     }
 
     override func start() {
-        guard let window = window else {
-            return
-        }
-
-        window.rootViewController = rootViewController
+        guard let window = window else { return }
+        
+        let rootNC = UINavigationController(rootViewController: rootViewController)
+        window.rootViewController = rootNC
         window.makeKeyAndVisible()
     }
 
     override func finish() {
 
     }
-
 }
