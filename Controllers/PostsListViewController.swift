@@ -9,7 +9,7 @@ import UIKit
 
 protocol MainViewUpdater: class {
     func updateActivityIndicator(isLoading: Bool)
-    func reload()
+    func reload(indexPaths: [IndexPath])
 }
 
 class PostsListViewController: UIViewController {
@@ -81,8 +81,7 @@ class PostsListViewController: UIViewController {
         postsCollectionView.collectionViewLayout = customFlowLayout
         postsCollectionView.contentInsetAdjustmentBehavior = .always
         postsCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: "PostCollectionViewCell")
-        
-        if let layout = postsCollectionView.collectionViewLayout as? PinterestLayout {
+        if let layout = self.postsCollectionView.collectionViewLayout as? PinterestLayout {
           layout.delegate = self
         }
     }
@@ -101,11 +100,18 @@ class PostsListViewController: UIViewController {
 
 extension PostsListViewController: MainViewUpdater {
     func updateActivityIndicator(isLoading: Bool) {
-        isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+        DispatchQueue.main.async {
+            isLoading ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+        }
     }
     
-    func reload() {
+    func reload(indexPaths: [IndexPath]) {
         DispatchQueue.main.async {
+            if let layout = self.postsCollectionView.collectionViewLayout as? PinterestLayout {
+                if self.viewModel.getNumberOfPosts() != 0 {
+                    layout.numberOfItems = self.viewModel.getNumberOfPosts()
+                }
+            }
             self.postsCollectionView.reloadData()
         }
     }
@@ -113,16 +119,22 @@ extension PostsListViewController: MainViewUpdater {
 
 // MARK: - PostsListViewController UICollectionViewDataSource, UICollectionViewDelegate
 
-extension PostsListViewController : UICollectionViewDataSource, UICollectionViewDelegate {
+extension PostsListViewController : UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.numberOfPosts()
+        return viewModel.getNumberOfPosts()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostCollectionViewCell", for: indexPath) as! PostCollectionViewCell
-        cell.setupCell(post: viewModel.post(at: indexPath))
+        cell.setupCell(post: viewModel.getPost(at: indexPath))
         cell.contentView.layer.cornerRadius = 20
         return cell
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard scrollView.contentSize.height > scrollView.frame.size.height, scrollView.scrollToBotoom(offset: postsCollectionView.bounds.height) else { return }
+        viewModel.didScrollToBottom()
+        postsCollectionView.collectionViewLayout.invalidateLayout()
     }
 }
 
@@ -132,7 +144,7 @@ extension PostsListViewController: PinterestLayoutDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
         heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-        return CGFloat(viewModel.post(at: indexPath).data.image.height)/5
+        return CGFloat(viewModel.getPost(at: indexPath).data.image.height)/5
     }
 }
 
