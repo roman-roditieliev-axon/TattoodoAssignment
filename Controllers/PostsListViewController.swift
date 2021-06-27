@@ -17,6 +17,8 @@ class PostsListViewController: UIViewController {
     private var activityIndicator = UIActivityIndicatorView(style: .medium)
     private let postsCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     private let customFlowLayout = PinterestLayout()
+    private var refreshControl: UIRefreshControl!
+
     var viewModel: PostsListViewModel = PostsListViewModel(networkManager: NetworkManager())
     // MARK: - Init
     
@@ -33,6 +35,7 @@ class PostsListViewController: UIViewController {
         viewModel.delegate = self
         viewModel.getPosts()
         setupNavigationBar()
+        setupRefreshControl()
         setupLayout()
         setupViews()
     }
@@ -48,6 +51,14 @@ class PostsListViewController: UIViewController {
 
         self.navigationItem.rightBarButtonItem  = rightButton
         self.navigationItem.leftBarButtonItem  = leftButton
+    }
+    
+    private func setupRefreshControl() {
+        self.refreshControl = UIRefreshControl()
+        self.postsCollectionView.alwaysBounceVertical = true
+        self.refreshControl.tintColor = .gray
+        self.refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        self.postsCollectionView.addSubview(refreshControl)
     }
 
     private func setupLayout() {
@@ -94,6 +105,14 @@ class PostsListViewController: UIViewController {
     @objc private func rightNavigationButtonAction() {
         print("right button did tap")
     }
+    
+    @objc func refreshData() {
+        viewModel.getPosts()
+    }
+    
+    private func stopRefresher() {
+        self.refreshControl.endRefreshing()
+    }
 }
 
 // MARK: - PostsListViewController + MainViewUpdater
@@ -113,6 +132,7 @@ extension PostsListViewController: MainViewUpdater {
                 }
             }
             self.postsCollectionView.reloadData()
+            self.stopRefresher()
         }
     }
 }
@@ -135,6 +155,10 @@ extension PostsListViewController : UICollectionViewDataSource, UICollectionView
         guard scrollView.contentSize.height > scrollView.frame.size.height, scrollView.scrollToBotoom(offset: postsCollectionView.bounds.height) else { return }
         viewModel.didScrollToBottom()
         postsCollectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
     }
 }
 
