@@ -8,17 +8,19 @@
 import UIKit
 
 class AppCoordinator: Coordinator {
-    
-    // MARK: - Properties
+        
     let window: UIWindow?
     lazy var rootViewController: PostsListViewController = {
         return PostsListViewController()
     }()
  
-    // MARK: - Coordinator
+    // MARK: - Init
+    
     init(window: UIWindow?) {
         self.window = window
     }
+
+    // MARK: - Route
 
     override func start() {
         guard let window = window else { return }

@@ -41,6 +41,7 @@ class PostsListViewController: UIViewController {
     }
     
     // MARK: - setup vc
+    
     private func setupNavigationBar() {
         self.title = "Tattoo List"
         self.navigationController?.navigationBar.barTintColor = .lightGray
@@ -98,6 +99,7 @@ class PostsListViewController: UIViewController {
     }
     
     // MARK: - Actions
+    
     @objc private func leftNavigationButtonAction() {
         print("left button did tap")
     }
@@ -158,7 +160,8 @@ extension PostsListViewController : UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let inputCoordinator = InputCoordinator(sourceViewController: self)
+        inputCoordinator.routeToDetails()
     }
 }
 
