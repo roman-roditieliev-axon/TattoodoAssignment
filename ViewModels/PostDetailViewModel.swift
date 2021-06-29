@@ -67,7 +67,10 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
     func downloadRelatedPosts(id: Int) {
         if !isLoading {
             isLoading = true
-            if self.relatedPosts.count == (self.page-1)*10  || self.page == 1 {
+            print(self.relatedPosts.count)
+            print(self.page)
+
+            if self.relatedPosts.count == (self.page-1)*40 || self.page == 1 {
                 let oldPosts = self.relatedPosts
                 self.networkManager.getRelatedPosts(page: self.page, postId: id) { (posts, error) in
                     if let strPosts = posts?.data {

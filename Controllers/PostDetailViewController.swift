@@ -41,8 +41,10 @@ class PostDetailViewController: UIViewController {
     private let tattooImageHeight: CGFloat = 450
     private let tattooShareSectionHeight: CGFloat = 60
     private let circleItemsSize: CGFloat = 40
-    private let relatedViewHeight: CGFloat = 600
+    private let relatedViewHeight: CGFloat = 660
     private let corner: CGFloat = 20
+    private let spacing10: CGFloat = 10
+    private let spacing15: CGFloat = 15
     
     //Properties
     private let customFlowLayout = PinterestLayout()
@@ -72,7 +74,7 @@ class PostDetailViewController: UIViewController {
         viewModel.delegate = self
         viewModel.downloadPost(id: postId ?? 0)
         viewModel.downloadRelatedPosts(id: postId ?? 0)
-        setupLayout()
+        setupMainScrollViewLayout()
         setupViews()
     }
     
@@ -88,7 +90,7 @@ class PostDetailViewController: UIViewController {
     
     // MARK: - setup vc
     
-    private func setupLayout() {
+    private func setupMainScrollViewLayout() {
         view.addSubview(scrollView)
         scrollView.addSubview(tattooImageView)
         scrollView.addSubview(tattooBottomSectionView)
@@ -119,7 +121,7 @@ class PostDetailViewController: UIViewController {
             tattooBottomSectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             tattooBottomSectionView.heightAnchor.constraint(equalToConstant: tattooShareSectionHeight),
             tattooBottomSectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            tattooBottomSectionView.bottomAnchor.constraint(equalTo: artistSectionView.topAnchor, constant: -15),
+            tattooBottomSectionView.bottomAnchor.constraint(equalTo: artistSectionView.topAnchor, constant: -spacing15),
         ])
         
         artistSectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -127,7 +129,7 @@ class PostDetailViewController: UIViewController {
             artistSectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             artistSectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             artistSectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            artistSectionView.bottomAnchor.constraint(equalTo: relatedSectionView.topAnchor, constant: -15),
+            artistSectionView.bottomAnchor.constraint(equalTo: relatedSectionView.topAnchor, constant: -spacing15),
         ])
         
         relatedSectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -136,7 +138,7 @@ class PostDetailViewController: UIViewController {
             relatedSectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             relatedSectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             relatedSectionView.heightAnchor.constraint(equalToConstant: relatedViewHeight),
-            relatedSectionView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30),
+            relatedSectionView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -spacing15*2),
         ])
         
         tattooBottomSectionViewLayout()
@@ -144,6 +146,7 @@ class PostDetailViewController: UIViewController {
         setupRelatedSectionViewLayout()
     }
     
+    //1st section
     private func tattooBottomSectionViewLayout() {
         tattooBottomSectionView.addSubview(likeTattoButton)
         tattooBottomSectionView.addSubview(shareTattoButton)
@@ -151,31 +154,32 @@ class PostDetailViewController: UIViewController {
         
         likeTattoButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            likeTattoButton.leadingAnchor.constraint(equalTo: tattooBottomSectionView.leadingAnchor, constant: 20),
-            likeTattoButton.topAnchor.constraint(equalTo: tattooBottomSectionView.topAnchor, constant: 10),
+            likeTattoButton.leadingAnchor.constraint(equalTo: tattooBottomSectionView.leadingAnchor, constant: spacing10*2),
+            likeTattoButton.topAnchor.constraint(equalTo: tattooBottomSectionView.topAnchor, constant: spacing10),
             likeTattoButton.heightAnchor.constraint(equalToConstant: circleItemsSize),
             likeTattoButton.widthAnchor.constraint(equalToConstant: circleItemsSize),
-            likeTattoButton.bottomAnchor.constraint(equalTo: tattooBottomSectionView.bottomAnchor, constant: -10),
+            likeTattoButton.bottomAnchor.constraint(equalTo: tattooBottomSectionView.bottomAnchor, constant: -spacing10),
         ])
         
         shareTattoButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            shareTattoButton.trailingAnchor.constraint(equalTo: tattooBottomSectionView.trailingAnchor, constant: -20),
-            shareTattoButton.topAnchor.constraint(equalTo: tattooBottomSectionView.topAnchor, constant: 10),
+            shareTattoButton.trailingAnchor.constraint(equalTo: tattooBottomSectionView.trailingAnchor, constant: -spacing10*2),
+            shareTattoButton.topAnchor.constraint(equalTo: tattooBottomSectionView.topAnchor, constant: spacing10),
             shareTattoButton.heightAnchor.constraint(equalToConstant: circleItemsSize),
             shareTattoButton.widthAnchor.constraint(equalToConstant: circleItemsSize),
-            shareTattoButton.bottomAnchor.constraint(equalTo: tattooBottomSectionView.bottomAnchor, constant: -10),
+            shareTattoButton.bottomAnchor.constraint(equalTo: tattooBottomSectionView.bottomAnchor, constant: -spacing10),
         ])
         
         savesLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            savesLabel.leadingAnchor.constraint(equalTo: likeTattoButton.trailingAnchor, constant: 10),
+            savesLabel.leadingAnchor.constraint(equalTo: likeTattoButton.trailingAnchor, constant: spacing10),
             savesLabel.centerYAnchor.constraint(equalTo: likeTattoButton.centerYAnchor),
             savesLabel.heightAnchor.constraint(equalToConstant: circleItemsSize/2),
             savesLabel.trailingAnchor.constraint(equalTo: shareTattoButton.leadingAnchor, constant: -circleItemsSize),
         ])
     }
     
+    //2nd section
     private func setupArtistSectionViewLayout() {
         artistSectionView.addSubview(artistImageView)
         artistSectionView.addSubview(artistStackView)
@@ -185,31 +189,32 @@ class PostDetailViewController: UIViewController {
         
         artistImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            artistImageView.topAnchor.constraint(equalTo: artistSectionView.topAnchor, constant: 10),
-            artistImageView.leadingAnchor.constraint(equalTo: artistSectionView.leadingAnchor, constant: 16),
+            artistImageView.topAnchor.constraint(equalTo: artistSectionView.topAnchor, constant: spacing10),
+            artistImageView.leadingAnchor.constraint(equalTo: artistSectionView.leadingAnchor, constant: spacing15),
             artistImageView.widthAnchor.constraint(equalToConstant: circleItemsSize),
             artistImageView.heightAnchor.constraint(equalToConstant: circleItemsSize),
         ])
         
         artistStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            artistStackView.leadingAnchor.constraint(equalTo: artistImageView.trailingAnchor, constant: 10),
+            artistStackView.leadingAnchor.constraint(equalTo: artistImageView.trailingAnchor, constant: spacing10),
             artistStackView.topAnchor.constraint(equalTo: artistImageView.topAnchor),
-            artistStackView.trailingAnchor.constraint(equalTo: artistSectionView.trailingAnchor, constant: -16),
-            artistStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
-            artistStackView.bottomAnchor.constraint(equalTo: artistSectionView.bottomAnchor, constant: -10),
+            artistStackView.trailingAnchor.constraint(equalTo: artistSectionView.trailingAnchor, constant: -spacing15),
+            artistStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: circleItemsSize),
+            artistStackView.bottomAnchor.constraint(equalTo: artistSectionView.bottomAnchor, constant: -spacing10),
         ])
     }
     
+    //3rd section
     private func setupRelatedSectionViewLayout() {
         relatedSectionView.addSubview(relatedCollectionView)
     
         relatedCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            relatedCollectionView.topAnchor.constraint(equalTo: relatedSectionView.topAnchor, constant: 10),
+            relatedCollectionView.topAnchor.constraint(equalTo: relatedSectionView.topAnchor, constant: spacing10),
             relatedCollectionView.leadingAnchor.constraint(equalTo: artistSectionView.leadingAnchor),
             relatedCollectionView.trailingAnchor.constraint(equalTo: artistSectionView.trailingAnchor),
-            relatedCollectionView.bottomAnchor.constraint(equalTo: relatedSectionView.bottomAnchor, constant: -10),
+            relatedCollectionView.bottomAnchor.constraint(equalTo: relatedSectionView.bottomAnchor, constant: -spacing10),
         ])
     }
     
@@ -359,7 +364,7 @@ extension PostDetailViewController : UICollectionViewDataSource, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostCollectionViewCell", for: indexPath) as! PostCollectionViewCell
         cell.setupCell(stringUrl: viewModel.getRelatedPosts()[indexPath.row].image.url)
-        cell.contentView.layer.cornerRadius = 20
+        cell.contentView.layer.cornerRadius = corner
         return cell
     }
     
