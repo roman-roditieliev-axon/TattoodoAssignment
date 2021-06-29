@@ -8,9 +8,6 @@
 import UIKit
 import SDWebImage
 
-private let tattooImageHeight: CGFloat = 450
-private let artistImageSize: CGFloat = 40
-
 // MARK: - PostDetailViewUpdater
 protocol PostDetailViewUpdater: class {
     func updateActivityIndicator(isLoading: Bool)
@@ -18,15 +15,31 @@ protocol PostDetailViewUpdater: class {
 }
 
 class PostDetailViewController: UIViewController {
+    
     private lazy var scrollView = UIScrollView()
-    private(set) lazy var tattooImageView = UIImageView()
+    
+    //tattoo section
+    private lazy var tattooImageView = UIImageView()
+    private lazy var tattooBacgroundViewSection = UIView()
+    private lazy var shareTattoButton = UIButton()
+    private lazy var likeTattoButton = UIButton()
+    private lazy var savesLabel = UILabel()
+    
+    //artist section
     private lazy var artistImageView = UIImageView()
     private lazy var artistStackView = UIStackView()
     private lazy var artistLabel = UILabel()
-    private lazy var descriptionLabel = UILabel()
-    private var activityIndicator = UIActivityIndicatorView(style: .medium)
-
     
+    //related posts section
+    private lazy var descriptionLabel = UILabel()
+    
+    
+    private var activityIndicator = UIActivityIndicatorView(style: .medium)
+    private let tattooImageHeight: CGFloat = 460
+    private let artistImageSize: CGFloat = 40
+
+    var postId: Int?
+    var viewModel: PostDetailViewModel = PostDetailViewModel(networkManager: NetworkManager())
     // MARK: - Init
     
     init() {
@@ -41,7 +54,8 @@ class PostDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewModel.delegate = self
+        viewModel.getPost(id: postId ?? 0)
         setupLayout()
         setupViews()
     }
@@ -123,15 +137,17 @@ extension PostDetailViewController: PostDetailViewUpdater {
     }
     
     func showDetails(of post: PostDetail) {
-        if let imageUrl = URL(string: post.image.url) {
-            tattooImageView.sd_setImage(with: imageUrl)
-        }
-        
-        artistLabel.text = post.artist.name
-        descriptionLabel.text = post.description
-        
-        if let artistImageUrl = URL(string: post.artist.imageUrl) {
-            artistImageView.sd_setImage(with: artistImageUrl)
+        DispatchQueue.main.async {
+            if let imageUrl = URL(string: post.image.url) {
+                self.tattooImageView.sd_setImage(with: imageUrl)
+            }
+            
+            self.artistLabel.text = post.artist.name
+            self.descriptionLabel.text = post.description
+            
+            if let artistImageUrl = URL(string: post.artist.imageUrl) {
+                self.artistImageView.sd_setImage(with: artistImageUrl)
+            }
         }
     }
 }

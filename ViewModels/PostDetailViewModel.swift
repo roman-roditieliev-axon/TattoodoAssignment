@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PostDetailPresenterProtocol: class {
-    func getData()
+    func getPost(id: Int)
 }
 
 class PostDetailViewModel: PostDetailPresenterProtocol {
@@ -28,10 +28,13 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
         self.networkManager = networkManager
     }
     
-    func getData() {
+    func getPost(id: Int) {
         isLoading = true
-        networkManager.getPostById(postId: 0) { (result, error) in
+        networkManager.getPostById(postId: id) { (result, error) in
             self.isLoading = false
+            if let post = result?.data {
+                self.delegate?.showDetails(of: post)
+            }
         }
     }
     

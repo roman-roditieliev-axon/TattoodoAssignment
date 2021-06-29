@@ -161,7 +161,7 @@ extension PostsListViewController : UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let inputCoordinator = InputCoordinator(sourceViewController: self)
-        inputCoordinator.routeToDetails()
+        inputCoordinator.routeToDetails(postId: viewModel.getPost(at: indexPath).data.id)
     }
 }
 

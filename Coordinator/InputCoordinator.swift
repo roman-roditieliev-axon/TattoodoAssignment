@@ -19,8 +19,9 @@ class InputCoordinator: Coordinator {
     
     // MARK: - Route
 
-    func routeToDetails() {
+    func routeToDetails(postId: Int) {
         let detailsViewController = PostDetailViewController()
+        detailsViewController.postId = postId
         sourceViewController?.navigationController?.pushViewController(detailsViewController, animated: false)
     }
 }
