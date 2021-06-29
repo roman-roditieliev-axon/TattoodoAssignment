@@ -20,7 +20,7 @@ class PostDetailViewController: UIViewController {
     
     //tattoo section
     private lazy var tattooImageView = UIImageView()
-    private lazy var tattooBacgroundViewSection = UIView()
+    private lazy var tattooBottomSectionView = UIView()
     private lazy var shareTattoButton = UIButton()
     private lazy var likeTattoButton = UIButton()
     private lazy var savesLabel = UILabel()
@@ -36,7 +36,8 @@ class PostDetailViewController: UIViewController {
     
     private var activityIndicator = UIActivityIndicatorView(style: .medium)
     private let tattooImageHeight: CGFloat = 460
-    private let artistImageSize: CGFloat = 40
+    private let tattooShareSectionHeight: CGFloat = 60
+    private let circleItemsSize: CGFloat = 40
 
     var postId: Int?
     var viewModel: PostDetailViewModel = PostDetailViewModel(networkManager: NetworkManager())
@@ -60,11 +61,20 @@ class PostDetailViewController: UIViewController {
         setupViews()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        tattooImageView.roundCorners([.topLeft, .topRight], radius: 20)
+        tattooBottomSectionView.roundCorners([.bottomLeft, .bottomRight], radius: 20)
+        likeTattoButton.roundCorners([.allCorners], radius: 20)
+        shareTattoButton.roundCorners([.allCorners], radius: 20)
+    }
+    
     // MARK: - setup vc
     
     private func setupLayout() {
         view.addSubview(scrollView)
         scrollView.addSubview(tattooImageView)
+        scrollView.addSubview(tattooBottomSectionView)
         scrollView.addSubview(artistImageView)
         scrollView.addSubview(artistStackView)
         
@@ -86,14 +96,23 @@ class PostDetailViewController: UIViewController {
             tattooImageView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             tattooImageView.heightAnchor.constraint(equalToConstant: tattooImageHeight),
             tattooImageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            tattooImageView.bottomAnchor.constraint(equalTo: artistImageView.topAnchor, constant: -10),
+        ])
+        
+        tattooBottomSectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tattooBottomSectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            tattooBottomSectionView.topAnchor.constraint(equalTo: tattooImageView.bottomAnchor),
+            tattooBottomSectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            tattooBottomSectionView.heightAnchor.constraint(equalToConstant: tattooShareSectionHeight),
+            tattooBottomSectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            tattooBottomSectionView.bottomAnchor.constraint(equalTo: artistImageView.topAnchor, constant: -10),
         ])
         
         artistImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             artistImageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            artistImageView.widthAnchor.constraint(equalToConstant: artistImageSize),
-            artistImageView.heightAnchor.constraint(equalToConstant: artistImageSize),
+            artistImageView.widthAnchor.constraint(equalToConstant: circleItemsSize),
+            artistImageView.heightAnchor.constraint(equalToConstant: circleItemsSize),
         ])
         
         artistStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -103,14 +122,63 @@ class PostDetailViewController: UIViewController {
             artistStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             artistStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16),
         ])
+        
+        tattooBottomSectionViewLayout()
+    }
+    
+    private func tattooBottomSectionViewLayout() {
+        tattooBottomSectionView.addSubview(likeTattoButton)
+        tattooBottomSectionView.addSubview(shareTattoButton)
+        tattooBottomSectionView.addSubview(savesLabel)
+        
+        likeTattoButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            likeTattoButton.leadingAnchor.constraint(equalTo: tattooBottomSectionView.leadingAnchor, constant: 20),
+            likeTattoButton.topAnchor.constraint(equalTo: tattooBottomSectionView.topAnchor, constant: 10),
+            likeTattoButton.heightAnchor.constraint(equalToConstant: circleItemsSize),
+            likeTattoButton.widthAnchor.constraint(equalToConstant: circleItemsSize),
+            likeTattoButton.bottomAnchor.constraint(equalTo: tattooBottomSectionView.bottomAnchor, constant: -10),
+        ])
+        
+        shareTattoButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            shareTattoButton.trailingAnchor.constraint(equalTo: tattooBottomSectionView.trailingAnchor, constant: -20),
+            shareTattoButton.topAnchor.constraint(equalTo: tattooBottomSectionView.topAnchor, constant: 10),
+            shareTattoButton.heightAnchor.constraint(equalToConstant: circleItemsSize),
+            shareTattoButton.widthAnchor.constraint(equalToConstant: circleItemsSize),
+            shareTattoButton.bottomAnchor.constraint(equalTo: tattooBottomSectionView.bottomAnchor, constant: -10),
+        ])
+        
+        savesLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            savesLabel.leadingAnchor.constraint(equalTo: likeTattoButton.trailingAnchor, constant: 10),
+            savesLabel.centerYAnchor.constraint(equalTo: likeTattoButton.centerYAnchor),
+            savesLabel.heightAnchor.constraint(equalToConstant: circleItemsSize/2),
+            savesLabel.trailingAnchor.constraint(equalTo: shareTattoButton.leadingAnchor, constant: -circleItemsSize),
+        ])
     }
     
     private func setupViews() {
         title = "Post Details"
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
+        
+        scrollView.backgroundColor = .gray
+        tattooBottomSectionView.backgroundColor = .white
+        
+        likeTattoButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        likeTattoButton.tintColor = .black
+        likeTattoButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
 
-        artistImageView.layer.cornerRadius = artistImageSize / 2
+        shareTattoButton.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        shareTattoButton.tintColor = .black
+        shareTattoButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        
+        savesLabel.textColor = .gray
+        savesLabel.font = UIFont.systemFont(ofSize: 14)
+        savesLabel.text = "1492 saves"
+
+        artistImageView.layer.cornerRadius = circleItemsSize / 2
         artistImageView.clipsToBounds = true
         artistImageView.sd_imageTransition = .fade
         

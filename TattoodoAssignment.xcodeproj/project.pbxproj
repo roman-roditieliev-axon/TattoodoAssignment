@@ -30,6 +30,7 @@
 		CE02BCB1268623A1005B6145 /* UIScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCB0268623A1005B6145 /* UIScrollViewExtension.swift */; };
 		CE02BCB52688D0F4005B6145 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCB42688D0F3005B6145 /* PostDetailViewController.swift */; };
 		CE02BCB92688D400005B6145 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCB82688D400005B6145 /* PostDetailViewModel.swift */; };
+		CE02BCC1268AE500005B6145 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCC0268AE500005B6145 /* UIViewExtension.swift */; };
 		CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3260F26843F4A00A6E884 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		CE02BCB0268623A1005B6145 /* UIScrollViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewExtension.swift; sourceTree = "<group>"; };
 		CE02BCB42688D0F3005B6145 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		CE02BCB82688D400005B6145 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
+		CE02BCC0268AE500005B6145 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		CE634FF726833F8100EF0E27 /* TattoodoAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TattoodoAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE634FFA26833F8100EF0E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEC3260F26843F4A00A6E884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				CE02BCB0268623A1005B6145 /* UIScrollViewExtension.swift */,
+				CE02BCC0268AE500005B6145 /* UIViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				CE02BC3126845BEB005B6145 /* PostDetailModel.swift in Sources */,
 				CE02BCB1268623A1005B6145 /* UIScrollViewExtension.swift in Sources */,
 				CE02BC7F26850B6D005B6145 /* PostsListViewController.swift in Sources */,
+				CE02BCC1268AE500005B6145 /* UIViewExtension.swift in Sources */,
 				CE02BC3B26846299005B6145 /* HTTPService.swift in Sources */,
 				CE02BC3826845EC4005B6145 /* Endpoints.swift in Sources */,
 				CE02BC5026847107005B6145 /* JSONParameterEncoder.swift in Sources */,
