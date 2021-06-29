@@ -35,7 +35,7 @@ class PostCollectionViewCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 20
     }
     
-    func setupCell(post: PostList) {
-        imageView.sd_setImage(with: URL(string: post.data.image.url))
+    func setupCell(stringUrl: String) {
+        imageView.sd_setImage(with: URL(string: stringUrl))
     }
 }

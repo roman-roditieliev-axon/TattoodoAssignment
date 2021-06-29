@@ -12,6 +12,11 @@ struct PostsResponse: Decodable {
     let meta: ResponseMetadata
 }
 
+struct RelatedPostsResponse: Decodable {
+    let data: [Post]
+    let meta: ResponseMetadata
+}
+
 struct ResponseMetadata: Decodable {
     let pagination: PaginationMeta
 }

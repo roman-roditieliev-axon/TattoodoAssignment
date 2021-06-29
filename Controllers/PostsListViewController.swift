@@ -148,7 +148,7 @@ extension PostsListViewController : UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostCollectionViewCell", for: indexPath) as! PostCollectionViewCell
-        cell.setupCell(post: viewModel.getPost(at: indexPath))
+        cell.setupCell(stringUrl: viewModel.getPost(at: indexPath).data.image.url)
         cell.contentView.layer.cornerRadius = 20
         return cell
     }

@@ -12,33 +12,42 @@ import SDWebImage
 protocol PostDetailViewUpdater: class {
     func updateActivityIndicator(isLoading: Bool)
     func showDetails(of post: PostDetail)
+    func reload(indexPaths: [IndexPath])
 }
 
 class PostDetailViewController: UIViewController {
     
     private lazy var scrollView = UIScrollView()
     
-    //tattoo section
+    //tattoo section UI elements
     private lazy var tattooImageView = UIImageView()
     private lazy var tattooBottomSectionView = UIView()
     private lazy var shareTattoButton = UIButton()
     private lazy var likeTattoButton = UIButton()
     private lazy var savesLabel = UILabel()
     
-    //artist section
+    //artist section UI elements
     private lazy var artistSectionView = UIView()
     private lazy var artistImageView = UIImageView()
     private lazy var artistStackView = UIStackView()
     private lazy var artistLabel = UILabel()
     private lazy var descriptionLabel = UILabel()
     
-    //related posts section
-    
-    
-    private var activityIndicator = UIActivityIndicatorView(style: .medium)
-    private let tattooImageHeight: CGFloat = 460
+    //related posts section UI elements
+    private lazy var relatedSectionView = UIView()
+    private let relatedCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+
+    //Constants
+    private let tattooImageHeight: CGFloat = 450
     private let tattooShareSectionHeight: CGFloat = 60
     private let circleItemsSize: CGFloat = 40
+    private let relatedViewHeight: CGFloat = 600
+    private let corner: CGFloat = 20
+    
+    //Properties
+    private let customFlowLayout = PinterestLayout()
+    private var activityIndicator = UIActivityIndicatorView(style: .medium)
+    private var refreshControl: UIRefreshControl!
     private var isLiked = false
 
     var postId: Int?
@@ -57,19 +66,24 @@ class PostDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        artistSectionView.alpha = 0
+        setupRelatedCollectionView()
+        setupRefreshControl()
         viewModel.delegate = self
         viewModel.downloadPost(id: postId ?? 0)
+        viewModel.downloadRelatedPosts(id: postId ?? 0)
         setupLayout()
         setupViews()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        tattooImageView.roundCorners([.topLeft, .topRight], radius: 20)
-        tattooBottomSectionView.roundCorners([.bottomLeft, .bottomRight], radius: 20)
-        likeTattoButton.roundCorners([.allCorners], radius: 20)
-        shareTattoButton.roundCorners([.allCorners], radius: 20)
-        artistSectionView.roundCorners([.allCorners], radius: 20)
+        tattooImageView.roundCorners([.topLeft, .topRight], radius: corner)
+        tattooBottomSectionView.roundCorners([.bottomLeft, .bottomRight], radius: corner)
+        likeTattoButton.roundCorners([.allCorners], radius: corner)
+        shareTattoButton.roundCorners([.allCorners], radius: corner)
+        artistSectionView.roundCorners([.allCorners], radius: corner)
+        relatedSectionView.roundCorners([.allCorners], radius: corner)
     }
     
     // MARK: - setup vc
@@ -79,6 +93,7 @@ class PostDetailViewController: UIViewController {
         scrollView.addSubview(tattooImageView)
         scrollView.addSubview(tattooBottomSectionView)
         scrollView.addSubview(artistSectionView)
+        scrollView.addSubview(relatedSectionView)
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -104,20 +119,29 @@ class PostDetailViewController: UIViewController {
             tattooBottomSectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             tattooBottomSectionView.heightAnchor.constraint(equalToConstant: tattooShareSectionHeight),
             tattooBottomSectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            tattooBottomSectionView.bottomAnchor.constraint(equalTo: artistSectionView.topAnchor, constant: -20),
+            tattooBottomSectionView.bottomAnchor.constraint(equalTo: artistSectionView.topAnchor, constant: -15),
         ])
         
         artistSectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             artistSectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            artistSectionView.topAnchor.constraint(equalTo: scrollView.bottomAnchor),
             artistSectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             artistSectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            artistSectionView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30),
+            artistSectionView.bottomAnchor.constraint(equalTo: relatedSectionView.topAnchor, constant: -15),
+        ])
+        
+        relatedSectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            relatedSectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            relatedSectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            relatedSectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            relatedSectionView.heightAnchor.constraint(equalToConstant: relatedViewHeight),
+            relatedSectionView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30),
         ])
         
         tattooBottomSectionViewLayout()
         setupArtistSectionViewLayout()
+        setupRelatedSectionViewLayout()
     }
     
     private func tattooBottomSectionViewLayout() {
@@ -177,6 +201,31 @@ class PostDetailViewController: UIViewController {
         ])
     }
     
+    private func setupRelatedSectionViewLayout() {
+        relatedSectionView.addSubview(relatedCollectionView)
+    
+        relatedCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            relatedCollectionView.topAnchor.constraint(equalTo: relatedSectionView.topAnchor, constant: 10),
+            relatedCollectionView.leadingAnchor.constraint(equalTo: artistSectionView.leadingAnchor),
+            relatedCollectionView.trailingAnchor.constraint(equalTo: artistSectionView.trailingAnchor),
+            relatedCollectionView.bottomAnchor.constraint(equalTo: relatedSectionView.bottomAnchor, constant: -10),
+        ])
+    }
+    
+    private func setupRelatedCollectionView() {
+        relatedCollectionView.dataSource = self
+        relatedCollectionView.delegate = self
+        relatedCollectionView.delaysContentTouches = false
+        relatedCollectionView.backgroundColor = .white
+        relatedCollectionView.collectionViewLayout = customFlowLayout
+        relatedCollectionView.contentInsetAdjustmentBehavior = .always
+        relatedCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: "PostCollectionViewCell")
+        if let layout = self.relatedCollectionView.collectionViewLayout as? PinterestLayout {
+          layout.delegate = self
+        }
+    }
+    
     private func setupViews() {
         title = "Post Details"
         view.backgroundColor = .white
@@ -215,6 +264,16 @@ class PostDetailViewController: UIViewController {
         descriptionLabel.numberOfLines = 0
         descriptionLabel.font = .systemFont(ofSize: 16)
         descriptionLabel.textColor = .black
+        
+        relatedSectionView.backgroundColor = .white
+    }
+    
+    private func setupRefreshControl() {
+        self.refreshControl = UIRefreshControl()
+        self.relatedCollectionView.alwaysBounceVertical = true
+        self.refreshControl.tintColor = .gray
+        self.refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        self.relatedCollectionView.addSubview(refreshControl)
     }
     
     // MARK: - Actions
@@ -238,11 +297,31 @@ class PostDetailViewController: UIViewController {
             self.present(vc, animated: true, completion: nil)
         }
     }
+    
+    @objc func refreshData() {
+        viewModel.downloadRelatedPosts(id: self.postId ?? 0)
+    }
+    
+    private func stopRefresher() {
+        self.refreshControl.endRefreshing()
+    }
 }
 
 // MARK: - PostDetailViewController PostDetailViewUpdater
 
 extension PostDetailViewController: PostDetailViewUpdater {
+    func reload(indexPaths: [IndexPath]) {
+        DispatchQueue.main.async {
+            if let layout = self.relatedCollectionView.collectionViewLayout as? PinterestLayout {
+                if self.viewModel.getNumberOfRelatedPosts() != 0 {
+                    layout.numberOfItems = self.viewModel.getNumberOfRelatedPosts()
+                }
+            }
+            self.relatedCollectionView.reloadData()
+            self.stopRefresher()
+        }
+    }
+    
     func updateActivityIndicator(isLoading: Bool) {
         DispatchQueue.main.async {
             isLoading ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
@@ -267,5 +346,40 @@ extension PostDetailViewController: PostDetailViewUpdater {
                 self.artistImageView.sd_setImage(with: artistImageUrl)
             }
         }
+    }
+}
+
+
+// MARK: - PostDetailViewController UICollectionViewDataSource, UICollectionViewDelegate
+extension PostDetailViewController : UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate  {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.getNumberOfRelatedPosts()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostCollectionViewCell", for: indexPath) as! PostCollectionViewCell
+        cell.setupCell(stringUrl: viewModel.getRelatedPosts()[indexPath.row].image.url)
+        cell.contentView.layer.cornerRadius = 20
+        return cell
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard scrollView.contentSize.height > scrollView.frame.size.height, scrollView.scrollToBotoom(offset: relatedCollectionView.bounds.height) else { return }
+        viewModel.didScrollToBottom(id: self.postId ?? 0)
+        relatedCollectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+}
+
+// MARK: - PostDetailViewController  PinterestLayoutDelegate
+
+extension PostDetailViewController: PinterestLayoutDelegate {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
+        return 200
     }
 }

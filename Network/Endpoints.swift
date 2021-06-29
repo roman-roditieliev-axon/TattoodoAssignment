@@ -10,6 +10,7 @@ import Foundation
 enum PostsEndpoints: RequestType {
     case getPosts(page: Int)
     case getPostDetails(postId: Int)
+    case getRelatedPosts(postId: Int, page: Int)
 }
 
 extension PostsEndpoints {
@@ -26,6 +27,8 @@ extension PostsEndpoints {
             return "/feeds/explore/"
         case .getPostDetails(let postId):
             return "/posts/\(postId)"
+        case .getRelatedPosts(let postId, _):
+            return "/posts/\(postId)/related/"
         }
     }
     
@@ -34,7 +37,7 @@ extension PostsEndpoints {
     var task: HTTPTask {
         switch self {
         case .getPostDetails: return .request
-        case .getPosts(let page):
+        case .getPosts(let page), .getRelatedPosts( _, let page):
             return .requestWithParameters(bodyParameters: nil, urlParameters: ["page": page])
         }
     }
