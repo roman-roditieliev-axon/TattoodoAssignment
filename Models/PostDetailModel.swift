@@ -17,13 +17,18 @@ struct PostDetail: Decodable {
     let artist: Artist
     let counts: Counts
     let image: Image
+    let shareUrl: String
+    
+    private enum CodingKeys : String, CodingKey {
+        case shareUrl = "share_url", description, id, artist, counts, image
+    }
 }
 
 struct Artist: Decodable {
     let id: Int
     let name: String
     let imageUrl: String
-    
+
     private enum CodingKeys : String, CodingKey {
         case imageUrl = "image_url", name, id
     }
