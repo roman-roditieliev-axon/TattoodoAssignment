@@ -14,7 +14,7 @@ struct PostDetailData: Decodable {
 struct PostDetail: Decodable {
     let id: Int
     let description: String
-    let artist: Artist
+    let artist: Artist?
     let counts: Counts
     let image: Image
     let shareUrl: String

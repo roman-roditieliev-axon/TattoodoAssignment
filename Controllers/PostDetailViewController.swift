@@ -68,14 +68,7 @@ class PostDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        artistSectionView.alpha = 0
-        setupRelatedCollectionView()
-        setupRefreshControl()
-        viewModel.delegate = self
-        viewModel.downloadPost(id: postId ?? 0)
-        viewModel.downloadRelatedPosts(id: postId ?? 0)
-        setupMainScrollViewLayout()
-        setupViews()
+        self.loadVC()
     }
     
     override func viewWillLayoutSubviews() {
@@ -203,6 +196,11 @@ class PostDetailViewController: UIViewController {
             artistStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: circleItemsSize),
             artistStackView.bottomAnchor.constraint(equalTo: artistSectionView.bottomAnchor, constant: -spacing10),
         ])
+        
+        artistLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            artistLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: spacing15)
+        ])
     }
     
     //3rd section
@@ -271,6 +269,7 @@ class PostDetailViewController: UIViewController {
         descriptionLabel.textColor = .black
         
         relatedSectionView.backgroundColor = .white
+        self.scrollView.alpha = 1
     }
     
     private func setupRefreshControl() {
@@ -310,6 +309,17 @@ class PostDetailViewController: UIViewController {
     private func stopRefresher() {
         self.refreshControl.endRefreshing()
     }
+    
+    private func loadVC() {
+        artistSectionView.alpha = 0
+        setupRelatedCollectionView()
+        setupRefreshControl()
+        viewModel.delegate = self
+        viewModel.downloadPost(id: postId ?? 0)
+        viewModel.downloadRelatedPosts(id: postId ?? 0)
+        setupMainScrollViewLayout()
+        setupViews()
+    }
 }
 
 // MARK: - PostDetailViewController PostDetailViewUpdater
@@ -339,7 +349,7 @@ extension PostDetailViewController: PostDetailViewUpdater {
                 self.tattooImageView.sd_setImage(with: imageUrl)
             }
             self.savesLabel.text = "\(post.counts.pins) pins"
-            self.artistLabel.text = post.artist.name
+            self.artistLabel.text = post.artist?.name
             self.descriptionLabel.text = post.description
             let height = post.description.height(withConstrainedWidth: self.artistStackView.frame.width, font: .systemFont(ofSize: 16))
             NSLayoutConstraint.activate([
@@ -347,7 +357,7 @@ extension PostDetailViewController: PostDetailViewUpdater {
             ])
             self.artistSectionView.alpha = 1
             
-            if let artistImageUrl = URL(string: post.artist.imageUrl) {
+            if let artistImageUrl = URL(string: post.artist?.imageUrl ?? "") {
                 self.artistImageView.sd_setImage(with: artistImageUrl)
             }
         }
@@ -375,7 +385,10 @@ extension PostDetailViewController : UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        self.postId = viewModel.getRelatedPosts()[indexPath.row].id
+        self.scrollView.alpha = 0
+        self.loadVC()
+        self.scrollView.setContentOffset(.zero, animated: true)
     }
 }
 
