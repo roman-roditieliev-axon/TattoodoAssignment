@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		50FF2FC67C11C9A0186D9F3A /* Pods_TattoodoAssignment__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3CA32B4C81E2DBE9D4ABC4 /* Pods_TattoodoAssignment__iOS_.framework */; };
 		CE02BC2A26845183005B6145 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC2926845183005B6145 /* NetworkManager.swift */; };
 		CE02BC2D26845657005B6145 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC2C26845657005B6145 /* PostModel.swift */; };
 		CE02BC3126845BEB005B6145 /* PostDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC3026845BEB005B6145 /* PostDetailModel.swift */; };
@@ -32,6 +31,8 @@
 		CE02BCB92688D400005B6145 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCB82688D400005B6145 /* PostDetailViewModel.swift */; };
 		CE02BCC1268AE500005B6145 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCC0268AE500005B6145 /* UIViewExtension.swift */; };
 		CE02BCC4268AFA34005B6145 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCC3268AFA34005B6145 /* StringExtension.swift */; };
+		CE02BCC9268B5F1B005B6145 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCC8268B5F1B005B6145 /* BaseViewController.swift */; };
+		CE02BCD0268B60D0005B6145 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3260F26843F4A00A6E884 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,10 +63,10 @@
 		CE02BCB82688D400005B6145 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
 		CE02BCC0268AE500005B6145 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		CE02BCC3268AFA34005B6145 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		CE02BCC8268B5F1B005B6145 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CE634FF726833F8100EF0E27 /* TattoodoAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TattoodoAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE634FFA26833F8100EF0E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEC3260F26843F4A00A6E884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EA3CA32B4C81E2DBE9D4ABC4 /* Pods_TattoodoAssignment__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TattoodoAssignment__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,21 +74,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50FF2FC67C11C9A0186D9F3A /* Pods_TattoodoAssignment__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		393EFED04C5BB9FFBDB33DF7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EA3CA32B4C81E2DBE9D4ABC4 /* Pods_TattoodoAssignment__iOS_.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		54DB27D5E08C98BB34B1707D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,21 +127,29 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		CE02BCCC268B5F26005B6145 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CE02BC9C2685ECDB005B6145 /* PinterestLayout.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		CE634FEA26833F8000EF0E27 = {
 			isa = PBXGroup;
 			children = (
 				CEC3260F26843F4A00A6E884 /* AppDelegate.swift */,
-				CE02BCAF26862359005B6145 /* Extensions */,
 				CE634FFA26833F8100EF0E27 /* Info.plist */,
-				CE02BC722684B9A7005B6145 /* Coordinator */,
-				CEC326172684429400A6E884 /* Network */,
 				CEC32616268440A000A6E884 /* Controllers */,
+				CE02BC722684B9A7005B6145 /* Coordinator */,
+				CE02BCAF26862359005B6145 /* Extensions */,
+				CE02BCCC268B5F26005B6145 /* Helpers */,
 				CEC326142684407D00A6E884 /* Models */,
-				CEC326152684408300A6E884 /* ViewModels */,
-				CE634FEF26833F8000EF0E27 /* Resource */,
-				CE634FF826833F8100EF0E27 /* Products */,
+				CEC326172684429400A6E884 /* Network */,
 				54DB27D5E08C98BB34B1707D /* Pods */,
-				393EFED04C5BB9FFBDB33DF7 /* Frameworks */,
+				CE634FF826833F8100EF0E27 /* Products */,
+				CE634FEF26833F8000EF0E27 /* Resource */,
+				CEC326152684408300A6E884 /* ViewModels */,
 			);
 			sourceTree = "<group>";
 		};
@@ -194,7 +194,7 @@
 				CE02BC932685DE91005B6145 /* Cells */,
 				CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */,
 				CE02BCB42688D0F3005B6145 /* PostDetailViewController.swift */,
-				CE02BC9C2685ECDB005B6145 /* PinterestLayout.swift */,
+				CE02BCC8268B5F1B005B6145 /* BaseViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -271,6 +271,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE02BCD0268B60D0005B6145 /* (null) in Resources */,
 				CE02BC6B26847EAC005B6145 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -344,6 +345,7 @@
 				CE02BC3126845BEB005B6145 /* PostDetailModel.swift in Sources */,
 				CE02BCB1268623A1005B6145 /* UIScrollViewExtension.swift in Sources */,
 				CE02BC7F26850B6D005B6145 /* PostsListViewController.swift in Sources */,
+				CE02BCC9268B5F1B005B6145 /* BaseViewController.swift in Sources */,
 				CE02BCC1268AE500005B6145 /* UIViewExtension.swift in Sources */,
 				CE02BC3B26846299005B6145 /* HTTPService.swift in Sources */,
 				CE02BC3826845EC4005B6145 /* Endpoints.swift in Sources */,
@@ -405,6 +407,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -459,6 +462,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -482,6 +486,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tattoodo.assignment;
 				PRODUCT_NAME = TattoodoAssignment;
 				SDKROOT = iphoneos;
@@ -505,6 +510,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tattoodo.assignment;
 				PRODUCT_NAME = TattoodoAssignment;
 				SDKROOT = iphoneos;

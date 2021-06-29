@@ -10,6 +10,7 @@ import UIKit
 class InputCoordinator: Coordinator {
     
     private weak var sourceViewController: PostsListViewController?
+    var postId: Int?
     
     // MARK: - Init
     
@@ -19,9 +20,11 @@ class InputCoordinator: Coordinator {
     
     // MARK: - Route
 
-    func routeToDetails(postId: Int) {
+    override func start() {
         let detailsViewController = PostDetailViewController()
-        detailsViewController.postId = postId
+        if let postId = self.postId {
+            detailsViewController.postId = postId
+        }
         sourceViewController?.navigationController?.pushViewController(detailsViewController, animated: false)
     }
 }

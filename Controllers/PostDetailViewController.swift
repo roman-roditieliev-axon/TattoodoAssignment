@@ -15,7 +15,7 @@ protocol PostDetailViewUpdater: class {
     func reload(indexPaths: [IndexPath])
 }
 
-class PostDetailViewController: UIViewController {
+class PostDetailViewController: BaseViewController {
     
     private lazy var scrollView = UIScrollView()
     
@@ -47,13 +47,11 @@ class PostDetailViewController: UIViewController {
     private let spacing15: CGFloat = 15
     
     //Properties
-    private let customFlowLayout = PinterestLayout()
-    private var activityIndicator = UIActivityIndicatorView(style: .medium)
-    private var refreshControl: UIRefreshControl!
-    private var isLiked = false
-
     var postId: Int?
     var viewModel: PostDetailViewModel = PostDetailViewModel(networkManager: NetworkManager())
+    private var isLiked = false
+    private var artistStackViewHeightConstraint: NSLayoutConstraint?
+
     // MARK: - Init
     
     init() {
@@ -77,11 +75,17 @@ class PostDetailViewController: UIViewController {
         tattooBottomSectionView.roundCorners([.bottomLeft, .bottomRight], radius: corner)
         likeTattoButton.roundCorners([.allCorners], radius: corner)
         shareTattoButton.roundCorners([.allCorners], radius: corner)
-        artistSectionView.roundCorners([.allCorners], radius: corner)
         relatedSectionView.roundCorners([.allCorners], radius: corner)
+        if let post = viewModel.getPost() {
+            setupArtistHeightConstraint(post: post)
+            self.view.layoutIfNeeded()
+        } else {
+            artistStackViewHeightConstraint?.constant = circleItemsSize
+        }
+        artistSectionView.roundCorners([.allCorners], radius: corner)
     }
     
-    // MARK: - setup vc
+    // MARK: - setup Layout
     
     private func setupMainScrollViewLayout() {
         view.addSubview(scrollView)
@@ -193,7 +197,6 @@ class PostDetailViewController: UIViewController {
             artistStackView.leadingAnchor.constraint(equalTo: artistImageView.trailingAnchor, constant: spacing10),
             artistStackView.topAnchor.constraint(equalTo: artistImageView.topAnchor),
             artistStackView.trailingAnchor.constraint(equalTo: artistSectionView.trailingAnchor, constant: -spacing15),
-            artistStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: circleItemsSize),
             artistStackView.bottomAnchor.constraint(equalTo: artistSectionView.bottomAnchor, constant: -spacing10),
         ])
         
@@ -201,6 +204,13 @@ class PostDetailViewController: UIViewController {
         NSLayoutConstraint.activate([
             artistLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: spacing15)
         ])
+    }
+    
+    private func setupArtistHeightConstraint(post: PostDetail) {
+        let heightOfDescription = post.description.height(withConstrainedWidth: self.artistStackView.frame.width, font: .systemFont(ofSize: 16))
+        self.artistStackViewHeightConstraint?.isActive = false
+        self.artistStackViewHeightConstraint = NSLayoutConstraint(item: self.artistStackView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: heightOfDescription+30)
+        self.artistStackViewHeightConstraint?.isActive = true
     }
     
     //3rd section
@@ -216,6 +226,8 @@ class PostDetailViewController: UIViewController {
         ])
     }
     
+    // MARK: - setup views
+
     private func setupRelatedCollectionView() {
         relatedCollectionView.dataSource = self
         relatedCollectionView.delegate = self
@@ -233,8 +245,8 @@ class PostDetailViewController: UIViewController {
         title = "Post Details"
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
-        
         scrollView.backgroundColor = .gray
+        
         tattooBottomSectionView.backgroundColor = .white
         tattooImageView.contentMode = .scaleAspectFill
         tattooImageView.clipsToBounds = true
@@ -254,6 +266,7 @@ class PostDetailViewController: UIViewController {
         
         artistSectionView.alpha = 0
         artistSectionView.backgroundColor = .white
+        
         artistStackView.distribution = .fillProportionally
         artistStackView.axis = .vertical
         artistStackView.spacing = 5
@@ -269,14 +282,12 @@ class PostDetailViewController: UIViewController {
         descriptionLabel.textColor = .black
         
         relatedSectionView.backgroundColor = .white
-        self.scrollView.alpha = 1
+        scrollView.alpha = 1
     }
     
-    private func setupRefreshControl() {
-        self.refreshControl = UIRefreshControl()
+     override func setupRefreshControl() {
+        super.setupRefreshControl()
         self.relatedCollectionView.alwaysBounceVertical = true
-        self.refreshControl.tintColor = .gray
-        self.refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         self.relatedCollectionView.addSubview(refreshControl)
     }
     
@@ -302,7 +313,8 @@ class PostDetailViewController: UIViewController {
         }
     }
     
-    @objc func refreshData() {
+    @objc override func refreshData() {
+        super.refreshData()
         viewModel.downloadRelatedPosts(id: self.postId ?? 0)
     }
     
@@ -346,20 +358,23 @@ extension PostDetailViewController: PostDetailViewUpdater {
     func showDetails(of post: PostDetail) {
         DispatchQueue.main.async {
             if let imageUrl = URL(string: post.image.url) {
+                self.tattooImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
                 self.tattooImageView.sd_setImage(with: imageUrl)
             }
             self.savesLabel.text = "\(post.counts.pins) pins"
             self.artistLabel.text = post.artist?.name
             self.descriptionLabel.text = post.description
-            let height = post.description.height(withConstrainedWidth: self.artistStackView.frame.width, font: .systemFont(ofSize: 16))
-            NSLayoutConstraint.activate([
-                self.artistStackView.heightAnchor.constraint(equalToConstant:height+30),
-            ])
-            self.artistSectionView.alpha = 1
             
             if let artistImageUrl = URL(string: post.artist?.imageUrl ?? "") {
+                self.artistImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
                 self.artistImageView.sd_setImage(with: artistImageUrl)
+            } else {
+                self.artistImageView.image = UIImage(systemName: "person.circle")
+                self.artistImageView.tintColor = .black
             }
+            
+            self.setupArtistHeightConstraint(post: post)
+            self.artistSectionView.alpha = 1
         }
     }
 }

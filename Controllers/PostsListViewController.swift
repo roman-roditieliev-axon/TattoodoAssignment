@@ -12,12 +12,9 @@ protocol MainViewUpdater: class {
     func reload(indexPaths: [IndexPath])
 }
 
-class PostsListViewController: UIViewController {
+class PostsListViewController: BaseViewController {
     
-    private var activityIndicator = UIActivityIndicatorView(style: .medium)
     private let postsCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    private let customFlowLayout = PinterestLayout()
-    private var refreshControl: UIRefreshControl!
 
     var viewModel: PostsListViewModel = PostsListViewModel(networkManager: NetworkManager())
     // MARK: - Init
@@ -54,17 +51,14 @@ class PostsListViewController: UIViewController {
         self.navigationItem.leftBarButtonItem  = leftButton
     }
     
-    private func setupRefreshControl() {
-        self.refreshControl = UIRefreshControl()
+     override func setupRefreshControl() {
+        super.setupRefreshControl()
         self.postsCollectionView.alwaysBounceVertical = true
-        self.refreshControl.tintColor = .gray
-        self.refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         self.postsCollectionView.addSubview(refreshControl)
     }
 
     private func setupLayout() {
         view.addSubview(postsCollectionView)
-        view.addSubview(activityIndicator)
         
         postsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -72,14 +66,6 @@ class PostsListViewController: UIViewController {
             postsCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
             postsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             postsCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
-        
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            activityIndicator.topAnchor.constraint(equalTo: view.topAnchor),
-            activityIndicator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            activityIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
@@ -102,13 +88,15 @@ class PostsListViewController: UIViewController {
     
     @objc private func leftNavigationButtonAction() {
         print("left button did tap")
+        self.postsCollectionView.setContentOffset(.zero, animated: true)
     }
     
     @objc private func rightNavigationButtonAction() {
         print("right button did tap")
     }
     
-    @objc func refreshData() {
+    @objc override func refreshData() {
+        super.refreshData()
         viewModel.getPosts()
     }
     
@@ -161,7 +149,8 @@ extension PostsListViewController : UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let inputCoordinator = InputCoordinator(sourceViewController: self)
-        inputCoordinator.routeToDetails(postId: viewModel.getPost(at: indexPath).data.id)
+        inputCoordinator.postId = viewModel.getPost(at: indexPath).data.id
+        inputCoordinator.start()
     }
 }
 

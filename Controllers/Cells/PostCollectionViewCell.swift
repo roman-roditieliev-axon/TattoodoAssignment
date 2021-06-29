@@ -36,6 +36,7 @@ class PostCollectionViewCell: UICollectionViewCell {
     }
     
     func setupCell(stringUrl: String) {
+        imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         imageView.sd_setImage(with: URL(string: stringUrl))
     }
 }
