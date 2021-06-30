@@ -26,7 +26,7 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
     
     private var isLoading: Bool = false {
         didSet {
-            self.isLoadingData(isLoading: isLoading)
+            self.delegate?.updateActivityIndicator(isLoading: isLoading)
         }
     }
     
@@ -56,10 +56,10 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
     }
     
     func downloadPost(id: Int) {
-        networkManager.getPostById(postId: id) { (result, error) in
+        networkManager.getPostById(postId: id) { [weak self] (result, error) in
             if let post = result?.data {
-                self.post = post
-                self.delegate?.showDetails(of: post)
+                self?.post = post
+                self?.delegate?.showDetails(of: post)
             }
         }
     }
@@ -67,32 +67,17 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
     func downloadRelatedPosts(id: Int) {
         if !isLoading {
             isLoading = true
-            print(self.relatedPosts.count)
-            print(self.page)
-
             if self.relatedPosts.count == (self.page-1)*40 || self.page == 1 {
                 let oldPosts = self.relatedPosts
-                self.networkManager.getRelatedPosts(page: self.page, postId: id) { (posts, error) in
+                self.networkManager.getRelatedPosts(page: self.page, postId: id) { [weak self] (posts, error) in
                     if let strPosts = posts?.data {
-                        self.relatedPosts = oldPosts + strPosts
-                        self.isLoading = false
-                        self.page += 1
-                        self.delegate?.reload(indexPaths: self.indexToInsert(postsCount: strPosts.count))
+                        self?.relatedPosts = oldPosts + strPosts
+                        self?.isLoading = false
+                        self?.page += 1
+                        self?.delegate?.reload()
                     }
                 }
             }
         }
     }
-    
-    // MARK: - private funcs
-    private func isLoadingData(isLoading: Bool) {
-        self.delegate?.updateActivityIndicator(isLoading: isLoading)
-    }
-    
-    private func indexToInsert(postsCount: Int) -> [IndexPath] {
-        let oldPostsCount = self.getNumberOfRelatedPosts() - postsCount
-        guard postsCount > 0 else { return [] }
-        return (oldPostsCount..<(oldPostsCount + postsCount)).map { IndexPath(row: $0, section: 0) }
-    }
-
 }

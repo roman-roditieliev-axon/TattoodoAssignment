@@ -9,7 +9,7 @@ import UIKit
 
 protocol MainViewUpdater: class {
     func updateActivityIndicator(isLoading: Bool)
-    func reload(indexPaths: [IndexPath])
+    func reload()
 }
 
 class PostsListViewController: BaseViewController {
@@ -114,7 +114,7 @@ extension PostsListViewController: MainViewUpdater {
         }
     }
     
-    func reload(indexPaths: [IndexPath]) {
+    func reload() {
         DispatchQueue.main.async {
             if let layout = self.postsCollectionView.collectionViewLayout as? PinterestLayout {
                 if self.viewModel.getNumberOfPosts() != 0 {
@@ -142,9 +142,8 @@ extension PostsListViewController : UICollectionViewDataSource, UICollectionView
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard scrollView.contentSize.height > scrollView.frame.size.height, scrollView.scrollToBotoom(offset: postsCollectionView.bounds.height) else { return }
+        guard scrollView.contentSize.height > scrollView.frame.size.height, scrollView.isScrolledToTheBottom(offset: postsCollectionView.bounds.height) else { return }
         viewModel.didScrollToBottom()
-        postsCollectionView.collectionViewLayout.invalidateLayout()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

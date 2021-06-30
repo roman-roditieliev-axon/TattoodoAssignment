@@ -12,7 +12,7 @@ import SDWebImage
 protocol PostDetailViewUpdater: class {
     func updateActivityIndicator(isLoading: Bool)
     func showDetails(of post: PostDetail)
-    func reload(indexPaths: [IndexPath])
+    func reload()
 }
 
 class PostDetailViewController: BaseViewController {
@@ -337,7 +337,7 @@ class PostDetailViewController: BaseViewController {
 // MARK: - PostDetailViewController PostDetailViewUpdater
 
 extension PostDetailViewController: PostDetailViewUpdater {
-    func reload(indexPaths: [IndexPath]) {
+    func reload() {
         DispatchQueue.main.async {
             if let layout = self.relatedCollectionView.collectionViewLayout as? PinterestLayout {
                 if self.viewModel.getNumberOfRelatedPosts() != 0 {
@@ -394,9 +394,8 @@ extension PostDetailViewController : UICollectionViewDataSource, UICollectionVie
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard scrollView.contentSize.height > scrollView.frame.size.height, scrollView.scrollToBotoom(offset: relatedCollectionView.bounds.height) else { return }
+        guard scrollView.contentSize.height > scrollView.frame.size.height, scrollView.isScrolledToTheBottom(offset: relatedCollectionView.bounds.height) else { return }
         viewModel.didScrollToBottom(id: self.postId ?? 0)
-        relatedCollectionView.collectionViewLayout.invalidateLayout()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

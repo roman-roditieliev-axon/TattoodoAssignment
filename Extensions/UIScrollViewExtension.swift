@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIScrollView {
-    func scrollToBotoom(offset: CGFloat = 30) -> Bool {
+    func isScrolledToTheBottom(offset: CGFloat = 30) -> Bool {
         return (self.contentOffset.y + self.frame.size.height + offset) > self.contentSize.height
     }
 }

@@ -22,7 +22,7 @@ class PostsListViewModel: PostsListPresenterProtocol {
     weak var delegate: MainViewUpdater?
     var isLoading = false {
         didSet {
-            self.isLoadingData(isLoading: isLoading)
+            self.delegate?.updateActivityIndicator(isLoading: isLoading)
         }
     }
 
@@ -50,26 +50,15 @@ class PostsListViewModel: PostsListPresenterProtocol {
             isLoading = true
             if self.posts.count == (self.page-1)*10  || self.page == 1 {
                 let oldPosts = self.posts
-                self.networkManager.getPosts(page: self.page) { (posts, error) in
+                self.networkManager.getPosts(page: self.page) { [weak self] (posts, error) in
                     if let strPosts = posts?.data {
-                        self.posts = oldPosts + strPosts
-                        self.isLoading = false
-                        self.page += 1
-                        self.delegate?.reload(indexPaths: self.indexToInsert(postsCount: strPosts.count))
+                        self?.posts = oldPosts + strPosts
+                        self?.isLoading = false
+                        self?.page += 1
+                        self?.delegate?.reload()
                     }
                 }
             }
         }
-    }
-    
-    // MARK: - private funcs
-    private func isLoadingData(isLoading: Bool) {
-        self.delegate?.updateActivityIndicator(isLoading: isLoading)
-    }
-    
-    private func indexToInsert(postsCount: Int) -> [IndexPath] {
-        let oldPostsCount = self.getNumberOfPosts() - postsCount
-        guard postsCount > 0 else { return [] }
-        return (oldPostsCount..<(oldPostsCount + postsCount)).map { IndexPath(row: $0, section: 0) }
     }
 }
