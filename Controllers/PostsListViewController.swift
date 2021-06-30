@@ -14,9 +14,11 @@ protocol MainViewUpdater: class {
 
 class PostsListViewController: BaseViewController {
     
+    private var appCoordinator: AppCoordinator!
     private let postsCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
 
     var viewModel: PostsListViewModel = PostsListViewModel(networkManager: NetworkManager())
+    
     // MARK: - Init
     
     init() {
@@ -29,6 +31,7 @@ class PostsListViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        appCoordinator = AppCoordinator()
         viewModel.delegate = self
         viewModel.getPosts()
         setupNavigationBar()
@@ -142,9 +145,9 @@ extension PostsListViewController : UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let inputCoordinator = InputCoordinator(sourceViewController: self)
-        inputCoordinator.postId = viewModel.getPost(at: indexPath).data.id
-        inputCoordinator.start()
+        let detailCoordinator = InputCoordinator(sourceViewController: self)
+        detailCoordinator.postId = viewModel.getPost(at: indexPath).data.id
+        self.appCoordinator.addChildCoordinator(detailCoordinator) 
     }
 }
 

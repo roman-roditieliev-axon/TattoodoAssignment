@@ -16,7 +16,8 @@ class AppCoordinator: Coordinator {
  
     // MARK: - Init
     
-    init(window: UIWindow?) {
+    override init() {
+        let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
     }
 
