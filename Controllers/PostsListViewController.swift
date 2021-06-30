@@ -116,11 +116,6 @@ extension PostsListViewController: MainViewUpdater {
     
     func reload() {
         DispatchQueue.main.async {
-            if let layout = self.postsCollectionView.collectionViewLayout as? PinterestLayout {
-                if self.viewModel.getNumberOfPosts() != 0 {
-                    layout.numberOfItems = self.viewModel.getNumberOfPosts()
-                }
-            }
             self.postsCollectionView.reloadData()
             self.stopRefresher()
         }

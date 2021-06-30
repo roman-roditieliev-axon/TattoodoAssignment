@@ -339,11 +339,6 @@ class PostDetailViewController: BaseViewController {
 extension PostDetailViewController: PostDetailViewUpdater {
     func reload() {
         DispatchQueue.main.async {
-            if let layout = self.relatedCollectionView.collectionViewLayout as? PinterestLayout {
-                if self.viewModel.getNumberOfRelatedPosts() != 0 {
-                    layout.numberOfItems = self.viewModel.getNumberOfRelatedPosts()
-                }
-            }
             self.relatedCollectionView.reloadData()
             self.stopRefresher()
         }
