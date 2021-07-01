@@ -311,7 +311,7 @@ class PostDetailViewController: BaseViewController {
     
     @objc override func refreshData() {
         super.refreshData()
-        viewModel.downloadRelatedPosts(id: self.postId ?? 0)
+        viewModel.getPostsHandlePagination(id: self.postId ?? 0)
     }
     
     private func stopRefresher() {
@@ -324,7 +324,7 @@ class PostDetailViewController: BaseViewController {
         setupRefreshControl()
         viewModel.delegate = self
         viewModel.downloadPost(id: postId ?? 0)
-        viewModel.downloadRelatedPosts(id: postId ?? 0)
+        viewModel.getPostsHandlePagination(id: postId ?? 0)
         setupMainScrollViewLayout()
         setupViews()
     }
