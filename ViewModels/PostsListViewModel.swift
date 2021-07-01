@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PostsListPresenterProtocol: class {
-    func getPosts()
+    func getPostsHandlePagination()
     func getNumberOfPosts() -> Int
     func getPost(at indexPath: IndexPath) -> PostList
     func didScrollToBottom()
@@ -19,6 +19,7 @@ class PostsListViewModel: PostsListPresenterProtocol {
     private let networkManager: NetworkManager
     private var posts: [PostList] = []
     private var page = 1
+    private let limit = 10
     weak var delegate: MainViewUpdater?
     var isLoading = false {
         didSet {
@@ -42,27 +43,31 @@ class PostsListViewModel: PostsListPresenterProtocol {
     }
     
     func didScrollToBottom() {
-        getPosts()
+        getPostsHandlePagination()
     }
     
-    func getPosts() {
-        if !isLoading {
+    func getPostsHandlePagination() {
+        if !isLoading && (self.posts.count == (self.page-1)*limit || self.page == 1) {
             isLoading = true
-            if self.posts.count == (self.page-1)*10  || self.page == 1 {
-                let oldPosts = self.posts
-                self.networkManager.getPosts(page: self.page) { [weak self] response in
-                    switch response {
-                    case.success(let data):
-                        if let strPosts = data?.data {
-                            self?.posts = oldPosts + strPosts
-                            self?.isLoading = false
-                            self?.page += 1
-                            self?.delegate?.reload()
-                        }
-                    case .failure(let error):
-                        print(error)
-                    }
+            let oldPosts = self.posts
+            self.downloadPosts { [weak self] data in
+                if let strPosts = data?.data {
+                    self?.posts = oldPosts + strPosts
+                    self?.isLoading = false
+                    self?.page += 1
+                    self?.delegate?.reload()
                 }
+            }
+        }
+    }
+    
+    private func downloadPosts(completion: @escaping (PostsResponse?) -> Void) {
+        self.networkManager.getPosts(page: self.page) { response in
+            switch response {
+            case.success(let data):
+                completion(data)
+            case .failure(let error):
+                print(error)
             }
         }
     }

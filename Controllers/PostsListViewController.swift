@@ -33,7 +33,7 @@ class PostsListViewController: BaseViewController {
         super.viewDidLoad()
         mainCoordinator = MainCoordinator()
         viewModel.delegate = self
-        viewModel.getPosts()
+        viewModel.getPostsHandlePagination()
         setupNavigationBar()
         setupRefreshControl()
         setupLayout()
@@ -95,7 +95,7 @@ class PostsListViewController: BaseViewController {
     
     @objc override func refreshData() {
         super.refreshData()
-        viewModel.getPosts()
+        viewModel.getPostsHandlePagination()
     }
     
     private func stopRefresher() {
