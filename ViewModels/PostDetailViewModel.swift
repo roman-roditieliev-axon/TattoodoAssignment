@@ -56,10 +56,15 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
     }
     
     func downloadPost(id: Int) {
-        networkManager.getPostById(postId: id) { [weak self] (result, error) in
-            if let post = result?.data {
-                self?.post = post
-                self?.delegate?.showDetails(of: post)
+        networkManager.getPostById(postId: id) { [weak self] response in
+            switch response {
+            case.success(let data):
+                if let post = data?.data {
+                    self?.post = post
+                    self?.delegate?.showDetails(of: post)
+                }
+            case .failure(let error):
+                print(error)
             }
         }
     }
@@ -69,12 +74,17 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
             isLoading = true
             if self.relatedPosts.count == (self.page-1)*40 || self.page == 1 {
                 let oldPosts = self.relatedPosts
-                self.networkManager.getRelatedPosts(page: self.page, postId: id) { [weak self] (posts, error) in
-                    if let strPosts = posts?.data {
-                        self?.relatedPosts = oldPosts + strPosts
-                        self?.isLoading = false
-                        self?.page += 1
-                        self?.delegate?.reload()
+                self.networkManager.getRelatedPosts(page: self.page, postId: id) { [weak self] response in
+                    switch response {
+                    case.success(let data):
+                        if let strPosts = data?.data {
+                            self?.relatedPosts = oldPosts + strPosts
+                            self?.isLoading = false
+                            self?.page += 1
+                            self?.delegate?.reload()
+                        }
+                    case .failure(let error):
+                        print(error)
                     }
                 }
             }

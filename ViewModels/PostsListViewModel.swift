@@ -50,12 +50,17 @@ class PostsListViewModel: PostsListPresenterProtocol {
             isLoading = true
             if self.posts.count == (self.page-1)*10  || self.page == 1 {
                 let oldPosts = self.posts
-                self.networkManager.getPosts(page: self.page) { [weak self] (posts, error) in
-                    if let strPosts = posts?.data {
-                        self?.posts = oldPosts + strPosts
-                        self?.isLoading = false
-                        self?.page += 1
-                        self?.delegate?.reload()
+                self.networkManager.getPosts(page: self.page) { [weak self] response in
+                    switch response {
+                    case.success(let data):
+                        if let strPosts = data?.data {
+                            self?.posts = oldPosts + strPosts
+                            self?.isLoading = false
+                            self?.page += 1
+                            self?.delegate?.reload()
+                        }
+                    case .failure(let error):
+                        print(error)
                     }
                 }
             }
