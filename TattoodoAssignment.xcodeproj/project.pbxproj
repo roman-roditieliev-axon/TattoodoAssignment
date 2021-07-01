@@ -34,6 +34,9 @@
 		CE02BCC9268B5F1B005B6145 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCC8268B5F1B005B6145 /* BaseViewController.swift */; };
 		CE02BCD0268B60D0005B6145 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		CE02BCF8268DC21F005B6145 /* TattooCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCF7268DC21F005B6145 /* TattooCollectionView.swift */; };
+		CE02BCFF268E0285005B6145 /* TattooSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCFE268E0285005B6145 /* TattooSectionView.swift */; };
+		CE02BD02268E0298005B6145 /* ArtistSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BD01268E0298005B6145 /* ArtistSectionView.swift */; };
+		CE02BD05268E03EF005B6145 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BD04268E03EF005B6145 /* Constants.swift */; };
 		CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3260F26843F4A00A6E884 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +69,9 @@
 		CE02BCC3268AFA34005B6145 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		CE02BCC8268B5F1B005B6145 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CE02BCF7268DC21F005B6145 /* TattooCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooCollectionView.swift; sourceTree = "<group>"; };
+		CE02BCFE268E0285005B6145 /* TattooSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooSectionView.swift; sourceTree = "<group>"; };
+		CE02BD01268E0298005B6145 /* ArtistSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSectionView.swift; sourceTree = "<group>"; };
+		CE02BD04268E03EF005B6145 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CE634FF726833F8100EF0E27 /* TattoodoAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TattoodoAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE634FFA26833F8100EF0E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEC3260F26843F4A00A6E884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -138,6 +144,15 @@
 			path = TattooCollectionView;
 			sourceTree = "<group>";
 		};
+		CE02BCFD268E024B005B6145 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				CE02BCFE268E0285005B6145 /* TattooSectionView.swift */,
+				CE02BD01268E0298005B6145 /* ArtistSectionView.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
 		CE634FEA26833F8000EF0E27 = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				CE02BC6A26847EAC005B6145 /* Assets.xcassets */,
+				CE02BD04268E03EF005B6145 /* Constants.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -195,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				CE02BC932685DE91005B6145 /* Cells */,
+				CE02BCFD268E024B005B6145 /* CustomViews */,
 				CE02BCC8268B5F1B005B6145 /* BaseViewController.swift */,
 				CE02BCB42688D0F3005B6145 /* PostDetailViewController.swift */,
 				CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */,
@@ -331,7 +348,10 @@
 				CE02BC9D2685ECDB005B6145 /* PinterestLayout.swift in Sources */,
 				CE02BCF8268DC21F005B6145 /* TattooCollectionView.swift in Sources */,
 				CE02BCB52688D0F4005B6145 /* PostDetailViewController.swift in Sources */,
+				CE02BCFF268E0285005B6145 /* TattooSectionView.swift in Sources */,
 				CE02BC4126846E94005B6145 /* NetworkLogger.swift in Sources */,
+				CE02BD05268E03EF005B6145 /* Constants.swift in Sources */,
+				CE02BD02268E0298005B6145 /* ArtistSectionView.swift in Sources */,
 				CE02BC4426846EC8005B6145 /* NetworkRouter.swift in Sources */,
 				CE02BC752684B9CF005B6145 /* Coordinator.swift in Sources */,
 				CE02BCB92688D400005B6145 /* PostDetailViewModel.swift in Sources */,

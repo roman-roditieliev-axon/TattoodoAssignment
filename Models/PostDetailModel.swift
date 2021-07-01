@@ -27,7 +27,7 @@ struct PostDetail: Decodable {
 struct Artist: Decodable {
     let id: Int
     let name: String
-    let imageUrl: String
+    let imageUrl: String?
 
     private enum CodingKeys : String, CodingKey {
         case imageUrl = "image_url", name, id
