@@ -74,7 +74,7 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
         if !isLoading && (self.relatedPosts.count == (self.page-1)*limit || self.page == 1) {
             isLoading = true
             let oldPosts = self.relatedPosts
-            self.downloadPosts(id: id) { [weak self] data in
+            self.downloadRelatedPosts(id: id) { [weak self] data in
                 if let strPosts = data?.data {
                     self?.relatedPosts = oldPosts + strPosts
                     self?.isLoading = false
@@ -85,7 +85,7 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
         }
     }
     
-    private func downloadPosts(id: Int,completion: @escaping (RelatedPostsResponse?) -> Void) {
+    private func downloadRelatedPosts(id: Int,completion: @escaping (RelatedPostsResponse?) -> Void) {
         self.networkManager.getRelatedPosts(page: self.page, postId: id)  { response in
             switch response {
             case.success(let data):
