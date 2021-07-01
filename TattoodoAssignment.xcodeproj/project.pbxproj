@@ -20,8 +20,8 @@
 		CE02BC5026847107005B6145 /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC4F26847107005B6145 /* JSONParameterEncoder.swift */; };
 		CE02BC6B26847EAC005B6145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE02BC6A26847EAC005B6145 /* Assets.xcassets */; };
 		CE02BC752684B9CF005B6145 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC742684B9CF005B6145 /* Coordinator.swift */; };
-		CE02BC792684BA27005B6145 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC782684BA27005B6145 /* AppCoordinator.swift */; };
-		CE02BC7C2684C2B9005B6145 /* InputCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC7B2684C2B9005B6145 /* InputCoordinator.swift */; };
+		CE02BC792684BA27005B6145 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC782684BA27005B6145 /* MainCoordinator.swift */; };
+		CE02BC7C2684C2B9005B6145 /* DetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC7B2684C2B9005B6145 /* DetailCoordinator.swift */; };
 		CE02BC7F26850B6D005B6145 /* PostsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */; };
 		CE02BC8526850F31005B6145 /* PostsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC8426850F31005B6145 /* PostsListViewModel.swift */; };
 		CE02BC962685DEE4005B6145 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC942685DEE4005B6145 /* PostCollectionViewCell.swift */; };
@@ -33,6 +33,7 @@
 		CE02BCC4268AFA34005B6145 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCC3268AFA34005B6145 /* StringExtension.swift */; };
 		CE02BCC9268B5F1B005B6145 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCC8268B5F1B005B6145 /* BaseViewController.swift */; };
 		CE02BCD0268B60D0005B6145 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		CE02BCF8268DC21F005B6145 /* TattooCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCF7268DC21F005B6145 /* TattooCollectionView.swift */; };
 		CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3260F26843F4A00A6E884 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,8 +53,8 @@
 		CE02BC4F26847107005B6145 /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
 		CE02BC6A26847EAC005B6145 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE02BC742684B9CF005B6145 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
-		CE02BC782684BA27005B6145 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		CE02BC7B2684C2B9005B6145 /* InputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCoordinator.swift; sourceTree = "<group>"; };
+		CE02BC782684BA27005B6145 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		CE02BC7B2684C2B9005B6145 /* DetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoordinator.swift; sourceTree = "<group>"; };
 		CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListViewController.swift; sourceTree = "<group>"; };
 		CE02BC8426850F31005B6145 /* PostsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListViewModel.swift; sourceTree = "<group>"; };
 		CE02BC942685DEE4005B6145 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -64,6 +65,7 @@
 		CE02BCC0268AE500005B6145 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		CE02BCC3268AFA34005B6145 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		CE02BCC8268B5F1B005B6145 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		CE02BCF7268DC21F005B6145 /* TattooCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooCollectionView.swift; sourceTree = "<group>"; };
 		CE634FF726833F8100EF0E27 /* TattoodoAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TattoodoAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE634FFA26833F8100EF0E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEC3260F26843F4A00A6E884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,8 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				CE02BC742684B9CF005B6145 /* Coordinator.swift */,
-				CE02BC782684BA27005B6145 /* AppCoordinator.swift */,
-				CE02BC7B2684C2B9005B6145 /* InputCoordinator.swift */,
+				CE02BC7B2684C2B9005B6145 /* DetailCoordinator.swift */,
+				CE02BC782684BA27005B6145 /* MainCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -120,19 +122,20 @@
 		CE02BCAF26862359005B6145 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				CE02BCC3268AFA34005B6145 /* StringExtension.swift */,
 				CE02BCB0268623A1005B6145 /* UIScrollViewExtension.swift */,
 				CE02BCC0268AE500005B6145 /* UIViewExtension.swift */,
-				CE02BCC3268AFA34005B6145 /* StringExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		CE02BCCC268B5F26005B6145 /* Helpers */ = {
+		CE02BCCC268B5F26005B6145 /* TattooCollectionView */ = {
 			isa = PBXGroup;
 			children = (
 				CE02BC9C2685ECDB005B6145 /* PinterestLayout.swift */,
+				CE02BCF7268DC21F005B6145 /* TattooCollectionView.swift */,
 			);
-			path = Helpers;
+			path = TattooCollectionView;
 			sourceTree = "<group>";
 		};
 		CE634FEA26833F8000EF0E27 = {
@@ -143,7 +146,7 @@
 				CEC32616268440A000A6E884 /* Controllers */,
 				CE02BC722684B9A7005B6145 /* Coordinator */,
 				CE02BCAF26862359005B6145 /* Extensions */,
-				CE02BCCC268B5F26005B6145 /* Helpers */,
+				CE02BCCC268B5F26005B6145 /* TattooCollectionView */,
 				CEC326142684407D00A6E884 /* Models */,
 				CEC326172684429400A6E884 /* Network */,
 				54DB27D5E08C98BB34B1707D /* Pods */,
@@ -172,8 +175,8 @@
 		CEC326142684407D00A6E884 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CE02BC2C26845657005B6145 /* PostModel.swift */,
 				CE02BC3026845BEB005B6145 /* PostDetailModel.swift */,
+				CE02BC2C26845657005B6145 /* PostModel.swift */,
 				CE02BC3426845D26005B6145 /* PostsResponseModel.swift */,
 			);
 			path = Models;
@@ -192,9 +195,9 @@
 			isa = PBXGroup;
 			children = (
 				CE02BC932685DE91005B6145 /* Cells */,
-				CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */,
-				CE02BCB42688D0F3005B6145 /* PostDetailViewController.swift */,
 				CE02BCC8268B5F1B005B6145 /* BaseViewController.swift */,
+				CE02BCB42688D0F3005B6145 /* PostDetailViewController.swift */,
+				CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE02BC9D2685ECDB005B6145 /* PinterestLayout.swift in Sources */,
+				CE02BCF8268DC21F005B6145 /* TattooCollectionView.swift in Sources */,
 				CE02BCB52688D0F4005B6145 /* PostDetailViewController.swift in Sources */,
 				CE02BC4126846E94005B6145 /* NetworkLogger.swift in Sources */,
 				CE02BC4426846EC8005B6145 /* NetworkRouter.swift in Sources */,
@@ -335,11 +339,11 @@
 				CE02BC4C268470C4005B6145 /* URLParameterEncoding.swift in Sources */,
 				CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */,
 				CE02BC2D26845657005B6145 /* PostModel.swift in Sources */,
-				CE02BC792684BA27005B6145 /* AppCoordinator.swift in Sources */,
+				CE02BC792684BA27005B6145 /* MainCoordinator.swift in Sources */,
 				CE02BC2A26845183005B6145 /* NetworkManager.swift in Sources */,
 				CE02BC4826847086005B6145 /* ParameterEncoding.swift in Sources */,
 				CE02BCC4268AFA34005B6145 /* StringExtension.swift in Sources */,
-				CE02BC7C2684C2B9005B6145 /* InputCoordinator.swift in Sources */,
+				CE02BC7C2684C2B9005B6145 /* DetailCoordinator.swift in Sources */,
 				CE02BC3526845D26005B6145 /* PostsResponseModel.swift in Sources */,
 				CE02BC8526850F31005B6145 /* PostsListViewModel.swift in Sources */,
 				CE02BC3126845BEB005B6145 /* PostDetailModel.swift in Sources */,

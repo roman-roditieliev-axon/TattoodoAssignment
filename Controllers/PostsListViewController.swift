@@ -14,8 +14,8 @@ protocol MainViewUpdater: class {
 
 class PostsListViewController: BaseViewController {
     
-    private var appCoordinator: AppCoordinator!
-    private let postsCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private var mainCoordinator: MainCoordinator!
+    private let postsCollectionView = TattooCollectionView()
 
     var viewModel: PostsListViewModel = PostsListViewModel(networkManager: NetworkManager())
     
@@ -31,7 +31,7 @@ class PostsListViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        appCoordinator = AppCoordinator()
+        mainCoordinator = MainCoordinator()
         viewModel.delegate = self
         viewModel.getPosts()
         setupNavigationBar()
@@ -74,14 +74,9 @@ class PostsListViewController: BaseViewController {
     
     private func setupViews() {
         view.backgroundColor = .white
-        
         postsCollectionView.dataSource = self
         postsCollectionView.delegate = self
-        postsCollectionView.delaysContentTouches = false
-        postsCollectionView.backgroundColor = .white
         postsCollectionView.collectionViewLayout = customFlowLayout
-        postsCollectionView.contentInsetAdjustmentBehavior = .always
-        postsCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: "PostCollectionViewCell")
         if let layout = self.postsCollectionView.collectionViewLayout as? PinterestLayout {
           layout.delegate = self
         }
@@ -133,7 +128,7 @@ extension PostsListViewController : UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostCollectionViewCell", for: indexPath) as! PostCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postsCollectionView.postCellReuseIdentifier, for: indexPath) as! PostCollectionViewCell
         cell.setupCell(stringUrl: viewModel.getPost(at: indexPath).data.image.url)
         cell.contentView.layer.cornerRadius = 20
         return cell
@@ -145,9 +140,9 @@ extension PostsListViewController : UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailCoordinator = InputCoordinator(sourceViewController: self)
+        let detailCoordinator = DetailCoordinator(sourceViewController: self)
         detailCoordinator.postId = viewModel.getPost(at: indexPath).data.id
-        self.appCoordinator.addChildCoordinator(detailCoordinator) 
+        self.mainCoordinator.addChildCoordinator(detailCoordinator) 
     }
 }
 

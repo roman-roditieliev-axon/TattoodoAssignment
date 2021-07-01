@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AppCoordinator: Coordinator {
+class MainCoordinator: Coordinator {
         
     let window: UIWindow?
     lazy var rootViewController: PostsListViewController = {

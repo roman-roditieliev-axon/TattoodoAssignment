@@ -35,7 +35,7 @@ class PostDetailViewController: BaseViewController {
     
     //related posts section UI elements
     private lazy var relatedSectionView = UIView()
-    private let relatedCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let relatedCollectionView = TattooCollectionView()
 
     //Constants
     private let tattooImageHeight: CGFloat = 450
@@ -231,11 +231,7 @@ class PostDetailViewController: BaseViewController {
     private func setupRelatedCollectionView() {
         relatedCollectionView.dataSource = self
         relatedCollectionView.delegate = self
-        relatedCollectionView.delaysContentTouches = false
-        relatedCollectionView.backgroundColor = .white
         relatedCollectionView.collectionViewLayout = customFlowLayout
-        relatedCollectionView.contentInsetAdjustmentBehavior = .always
-        relatedCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: "PostCollectionViewCell")
         if let layout = self.relatedCollectionView.collectionViewLayout as? PinterestLayout {
           layout.delegate = self
         }
@@ -382,7 +378,7 @@ extension PostDetailViewController : UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostCollectionViewCell", for: indexPath) as! PostCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedCollectionView.postCellReuseIdentifier, for: indexPath) as! PostCollectionViewCell
         cell.setupCell(stringUrl: viewModel.getRelatedPosts()[indexPath.row].image.url)
         cell.contentView.layer.cornerRadius = corner
         return cell
