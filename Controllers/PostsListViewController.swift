@@ -154,10 +154,10 @@ extension PostsListViewController : UICollectionViewDataSource, UICollectionView
 // MARK: - PostsListViewController  PinterestLayoutDelegate
 
 extension PostsListViewController: PinterestLayoutDelegate {
-    func collectionView(
-        _ collectionView: UICollectionView,
+    func collectionView(_ collectionView: UICollectionView,
         heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-        return CGFloat(viewModel.getPost(at: indexPath).data.image.height)/5
+        let heightOfCell = calculateHeightOfCollectionItem(imageWidth: CGFloat(viewModel.getPost(at: indexPath).data.image.width), imageHeight: CGFloat(viewModel.getPost(at: indexPath).data.image.height))
+        return heightOfCell
     }
 }
 

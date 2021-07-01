@@ -248,7 +248,7 @@ class PostDetailViewController: BaseViewController {
         scrollView.backgroundColor = .gray
         
         tattooBottomSectionView.backgroundColor = .white
-        tattooImageView.contentMode = .scaleAspectFill
+        tattooImageView.contentMode = .scaleToFill
         tattooImageView.clipsToBounds = true
         
         likeTattoButton.setImage(UIImage(systemName: "heart"), for: .normal)
@@ -404,9 +404,9 @@ extension PostDetailViewController : UICollectionViewDataSource, UICollectionVie
 // MARK: - PostDetailViewController  PinterestLayoutDelegate
 
 extension PostDetailViewController: PinterestLayoutDelegate {
-    func collectionView(
-        _ collectionView: UICollectionView,
+    func collectionView(_ collectionView: UICollectionView,
         heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-        return 200
+        let heightOfCell = calculateHeightOfCollectionItem(imageWidth: CGFloat(viewModel.getRelatedPosts()[indexPath.row].image.width), imageHeight: CGFloat(viewModel.getRelatedPosts()[indexPath.row].image.height))
+        return heightOfCell
     }
 }
