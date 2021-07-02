@@ -37,6 +37,7 @@
 		CE02BCFF268E0285005B6145 /* TattooSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCFE268E0285005B6145 /* TattooSectionView.swift */; };
 		CE02BD02268E0298005B6145 /* ArtistSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BD01268E0298005B6145 /* ArtistSectionView.swift */; };
 		CE02BD05268E03EF005B6145 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BD04268E03EF005B6145 /* Constants.swift */; };
+		CE02BD08268F0BE3005B6145 /* DetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BD07268F0BE3005B6145 /* DetailHeaderView.swift */; };
 		CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3260F26843F4A00A6E884 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,7 @@
 		CE02BCFE268E0285005B6145 /* TattooSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooSectionView.swift; sourceTree = "<group>"; };
 		CE02BD01268E0298005B6145 /* ArtistSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSectionView.swift; sourceTree = "<group>"; };
 		CE02BD04268E03EF005B6145 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CE02BD07268F0BE3005B6145 /* DetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderView.swift; sourceTree = "<group>"; };
 		CE634FF726833F8100EF0E27 /* TattoodoAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TattoodoAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE634FFA26833F8100EF0E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEC3260F26843F4A00A6E884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			children = (
 				CE02BCFE268E0285005B6145 /* TattooSectionView.swift */,
 				CE02BD01268E0298005B6145 /* ArtistSectionView.swift */,
+				CE02BD07268F0BE3005B6145 /* DetailHeaderView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				CE02BC4C268470C4005B6145 /* URLParameterEncoding.swift in Sources */,
 				CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */,
 				CE02BC2D26845657005B6145 /* PostModel.swift in Sources */,
+				CE02BD08268F0BE3005B6145 /* DetailHeaderView.swift in Sources */,
 				CE02BC792684BA27005B6145 /* MainCoordinator.swift in Sources */,
 				CE02BC2A26845183005B6145 /* NetworkManager.swift in Sources */,
 				CE02BC4826847086005B6145 /* ParameterEncoding.swift in Sources */,

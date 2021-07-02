@@ -12,7 +12,7 @@ protocol PinterestLayoutDelegate: AnyObject {
         heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat
 }
 
-class PinterestLayout: UICollectionViewLayout {
+class PinterestLayout: UICollectionViewFlowLayout {
     weak var delegate: PinterestLayoutDelegate?
     
     let numberOfColumns = 2
@@ -54,7 +54,7 @@ class PinterestLayout: UICollectionViewLayout {
                 heightForPhotoAtIndexPath: indexPath) ?? 180
             let height = cellPadding * 2 + photoHeight
             let frame = CGRect(x: xOffset[column],
-                               y: yOffset[column],
+                               y: yOffset[column]+self.headerReferenceSize.height,
                                width: columnWidth,
                                height: height)
             let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
@@ -70,20 +70,35 @@ class PinterestLayout: UICollectionViewLayout {
         }
     }
     
-    override func layoutAttributesForElements(in rect: CGRect)
-    -> [UICollectionViewLayoutAttributes]? {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var visibleLayoutAttributes: [UICollectionViewLayoutAttributes] = []
+        if  let attributes = super.layoutAttributesForElements(in: rect) {
+            for attr in attributes where attr.representedElementKind == UICollectionView.elementKindSectionHeader {
+                if let supplementaryAttributes = layoutAttributesForSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, at: attr.indexPath) {
+                    visibleLayoutAttributes.append(supplementaryAttributes)
+                }
+            }
+        }
         
         for attributes in cache {
             if attributes.frame.intersects(rect) {
                 visibleLayoutAttributes.append(attributes)
             }
         }
+        
         return visibleLayoutAttributes
     }
     
-    override func layoutAttributesForItem(at indexPath: IndexPath)
-        -> UICollectionViewLayoutAttributes? {
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes {
       return cache[indexPath.item]
+    }
+    
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        if elementKind == UICollectionView.elementKindSectionHeader {
+            let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: indexPath)
+            attributes.frame = CGRect(x: 0, y: 0, width: self.contentWidth, height: 610)
+            return attributes
+        }
+        return nil
     }
 }
