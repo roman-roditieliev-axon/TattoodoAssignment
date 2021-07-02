@@ -45,11 +45,7 @@ class PostDetailViewController: BaseViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-//        self.artistSectionView.setupArtistHeightConstraint(post: viewModel.getPost())
-//        tattooSectionView.roundCorners([.allCorners], radius: Constants.IndentsAndSizes.corner)
-//        tattooSectionView.setButtonsCorners()
         relatedSectionView.roundCorners([.allCorners], radius: Constants.IndentsAndSizes.corner)
-//        artistSectionView.roundCorners([.allCorners], radius: Constants.IndentsAndSizes.corner)
     }
     
     // MARK: - setup Layout
@@ -101,9 +97,6 @@ class PostDetailViewController: BaseViewController {
         title = "Post Details"
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
-//        scrollView.backgroundColor = .gray
-//        artistSectionView.backgroundColor = .white
-//        artistSectionView.alpha = 1
     }
     
      override func setupRefreshControl() {
@@ -124,7 +117,6 @@ class PostDetailViewController: BaseViewController {
     }
     
     private func loadVC() {
-//        artistSectionView.alpha = 0
         setupRelatedCollectionView()
         setupRefreshControl()
         viewModel.delegate = self
