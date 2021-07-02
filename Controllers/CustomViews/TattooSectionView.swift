@@ -143,6 +143,8 @@ class TattooSectionView: UIView {
     }
     
     func setButtonsCorners() {
+        tattooImageView.roundCorners([.topLeft, .topRight], radius: Constants.IndentsAndSizes.corner)
+        tattooBottomSectionView.roundCorners([.bottomLeft, .bottomRight], radius: Constants.IndentsAndSizes.corner)
         likeTattoButton.roundCorners([.allCorners], radius: Constants.IndentsAndSizes.corner)
         shareTattoButton.roundCorners([.allCorners], radius: Constants.IndentsAndSizes.corner)
     }
