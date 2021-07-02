@@ -96,7 +96,7 @@ class PinterestLayout: UICollectionViewFlowLayout {
     override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         if elementKind == UICollectionView.elementKindSectionHeader {
             let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: indexPath)
-            attributes.frame = CGRect(x: 0, y: 0, width: self.contentWidth, height: 610)
+            attributes.frame = CGRect(x: 0, y: 0, width: self.contentWidth, height: self.headerReferenceSize.height)
             return attributes
         }
         return nil

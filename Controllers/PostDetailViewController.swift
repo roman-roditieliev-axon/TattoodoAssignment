@@ -19,12 +19,14 @@ class PostDetailViewController: BaseViewController {
 
     //related posts section UI elements
     private lazy var relatedSectionView = UIView()
-    private let relatedCollectionView = TattooCollectionView()
+    private lazy var relatedCollectionView = TattooCollectionView()
+    private lazy var relatedBackgroundView = UIView()
     
     //Properties
     var postId: Int?
     var viewModel: PostDetailViewModel = PostDetailViewModel(networkManager: NetworkManager())
     private var isLiked = false
+    private var headerHeight: CGFloat = 610
 
     // MARK: - Init
     
@@ -66,6 +68,21 @@ class PostDetailViewController: BaseViewController {
         setupRelatedSectionViewLayout()
     }
     
+    private func addRelatedBackgroundView() {
+        view.addSubview(relatedBackgroundView)
+        relatedBackgroundView.backgroundColor = .white
+        relatedBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            relatedBackgroundView.topAnchor.constraint(equalTo: relatedCollectionView.cellForItem(at: IndexPath(item: 0, section: 0))?.topAnchor ?? relatedCollectionView.topAnchor),
+            relatedBackgroundView.leadingAnchor.constraint(equalTo: relatedCollectionView.leadingAnchor),
+            relatedBackgroundView.trailingAnchor.constraint(equalTo: relatedCollectionView.trailingAnchor),
+            relatedBackgroundView.widthAnchor.constraint(equalTo: relatedCollectionView.widthAnchor),
+            relatedBackgroundView.heightAnchor.constraint(equalToConstant: Constants.IndentsAndSizes.relatedViewHeight),
+            relatedBackgroundView.bottomAnchor.constraint(equalTo: relatedCollectionView.bottomAnchor),
+        ])
+
+    }
+    
     //3rd section
     private func setupRelatedSectionViewLayout() {
         relatedSectionView.addSubview(relatedCollectionView)
@@ -89,7 +106,7 @@ class PostDetailViewController: BaseViewController {
         relatedCollectionView.collectionViewLayout = customFlowLayout
         if let layout = self.relatedCollectionView.collectionViewLayout as? PinterestLayout {
             layout.delegate = self
-            layout.headerReferenceSize = CGSize(width: self.relatedCollectionView.frame.size.width, height: 610)
+            layout.headerReferenceSize = CGSize(width: self.relatedCollectionView.frame.size.width, height: headerHeight)
         }
     }
     
@@ -97,6 +114,30 @@ class PostDetailViewController: BaseViewController {
         title = "Post Details"
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
+    }
+    
+    private func setupHeaderView(indexPath: IndexPath, kind: String) -> DetailHeaderView{
+        let header = relatedCollectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                     withReuseIdentifier:
+                                                                        "DetailHeaderView",
+                                                                     for: indexPath) as! DetailHeaderView
+        header.delegate = self
+        header.tattooSectionView.setButtonsCorners()
+        header.artistSectionView.roundCorners(.allCorners, radius: Constants.IndentsAndSizes.corner)
+
+        if let post = viewModel.getPost() {
+            if let imageUrl = URL(string: post.image.url) {
+                header.tattooImageURL = imageUrl
+            }
+            header.savesCount = post.counts.pins
+            
+            let artistImageUrl = URL(string: post.artist?.imageUrl ?? "")
+            header.artistImageURL = artistImageUrl
+            header.artistName = post.artist?.name ?? ""
+            header.artistDescription = post.description
+            headerHeight = Constants.IndentsAndSizes.tattooImageHeight + Constants.IndentsAndSizes.tattooShareSectionHeight + (Constants.IndentsAndSizes.spacing10*2) + (Constants.IndentsAndSizes.spacing15) + header.artistSectionView.setupArtistHeightConstraint(post: post)
+        }
+        return header
     }
     
      override func setupRefreshControl() {
@@ -125,6 +166,14 @@ class PostDetailViewController: BaseViewController {
         setupMainScrollViewLayout()
         setupViews()
     }
+    
+    private func scrollToTopCollectionView(indexPath: IndexPath) {
+        if let attributes = relatedCollectionView.layoutAttributesForSupplementaryElement(ofKind: UICollectionView.elementKindSectionHeader, at: indexPath) {
+            var offsetY = attributes.frame.origin.y - relatedCollectionView.contentInset.top
+            offsetY -= relatedCollectionView.safeAreaInsets.top
+            relatedCollectionView.setContentOffset(CGPoint(x: 0, y: offsetY), animated: false)
+        }
+    }
 }
 
 // MARK: - PostDetailViewController PostDetailViewUpdater
@@ -144,7 +193,7 @@ extension PostDetailViewController: PostDetailViewUpdater {
     }
     
     func showDetails(of post: PostDetail) {
-
+        
     }
 }
 
@@ -170,32 +219,12 @@ extension PostDetailViewController : UICollectionViewDataSource, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.postId = viewModel.getRelatedPosts()[indexPath.row].id
         self.loadVC()
-        relatedCollectionView.collectionViewLayout.invalidateLayout()
+        self.scrollToTopCollectionView(indexPath: indexPath)
+        self.relatedCollectionView.collectionViewLayout.invalidateLayout()
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                     withReuseIdentifier:
-                                                                        "DetailHeaderView",
-                                                                     for: indexPath) as! DetailHeaderView
-        header.delegate = self
-        header.tattooSectionView.setButtonsCorners()
-        header.artistSectionView.roundCorners(.allCorners, radius: Constants.IndentsAndSizes.corner)
-
-        if let post = viewModel.getPost() {
-            if let imageUrl = URL(string: post.image.url) {
-                header.tattooImageURL = imageUrl
-            }
-            header.savesCount = post.counts.pins
-            header.artistName = post.artist?.name ?? ""
-            header.artistDescription = post.description
-            
-            let artistImageUrl = URL(string: post.artist?.imageUrl ?? "")
-            header.artistImageURL = artistImageUrl
-            header.artistName = viewModel.getPost()?.artist?.name ?? ""
-            header.artistDescription = viewModel.getPost()?.description ?? ""
-        }
-        return header
+        return setupHeaderView(indexPath: indexPath, kind: kind)
     }
     
 }
@@ -224,6 +253,6 @@ extension PostDetailViewController: DetaiHeaderViewDelegate {
 
 extension PostDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 610) //add your height here
+        return CGSize(width: collectionView.frame.width, height: headerHeight) //add your height here
     }
 }

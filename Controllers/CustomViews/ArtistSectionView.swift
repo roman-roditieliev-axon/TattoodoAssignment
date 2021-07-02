@@ -115,18 +115,19 @@ class ArtistSectionView: UIView {
         ])
     }
     
-     func setupArtistHeightConstraint(post: PostDetail?) {
+    func setupArtistHeightConstraint(post: PostDetail?) -> CGFloat {
         let heightOfDescription = post?.description.height(withConstrainedWidth: self.artistStackView.frame.width, font: .systemFont(ofSize: 16)) ?? 0
         self.artistStackViewHeightConstraint?.isActive = false
         var height: CGFloat = 0
         
         if heightOfDescription <= Constants.IndentsAndSizes.spacing15*2 {
-            height = 40
+            height = 50
         } else {
             height = heightOfDescription+50
         }
         self.artistStackViewHeightConstraint = NSLayoutConstraint(item: self.artistStackView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: height)
         self.artistStackViewHeightConstraint?.isActive = true
-     }
-
+        return height
+    }
+    
 }
