@@ -13,9 +13,11 @@ protocol DetaiHeaderViewDelegate: class {
 
 class DetailHeaderView: UICollectionViewCell {
     
+    //header views
     lazy var tattooSectionView = TattooSectionView()
     lazy var artistSectionView = ArtistSectionView()
     
+    //properties
     weak var delegate: DetaiHeaderViewDelegate?
 
     var tattooImageURL: URL? = URL(string: "") {
@@ -48,6 +50,7 @@ class DetailHeaderView: UICollectionViewCell {
         }
     }
 
+    //init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -58,11 +61,14 @@ class DetailHeaderView: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - setup views
+    
     private func setupViews() {
         self.backgroundColor = .clear
         self.tattooSectionView.delegate = self
     }
     
+    // MARK: - setup Layout
     private func setupLayout() {
         self.addSubview(tattooSectionView)
         self.addSubview(artistSectionView)
@@ -85,6 +91,8 @@ class DetailHeaderView: UICollectionViewCell {
         ])
     }
 }
+
+// MARK: - DetailHeaderView TappedSharedButtonDelegate
 
 extension DetailHeaderView: TappedSharedButtonDelegate {
     func shareDidTap() {

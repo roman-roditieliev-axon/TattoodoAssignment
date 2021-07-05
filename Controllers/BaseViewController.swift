@@ -8,6 +8,7 @@
 import UIKit
 
 class BaseViewController: UIViewController {
+    
     let customFlowLayout = PinterestLayout()
     var refreshControl: UIRefreshControl!
     var activityIndicator = UIActivityIndicatorView(style: .medium)

@@ -16,6 +16,7 @@ class PostsListViewController: BaseViewController {
     
     private var mainCoordinator: MainCoordinator!
     private let postsCollectionView = TattooCollectionView()
+    private let navigationTitle = "Tattoo List"
 
     var viewModel: PostsListViewModel = PostsListViewModel(networkManager: NetworkManager())
     
@@ -43,10 +44,10 @@ class PostsListViewController: BaseViewController {
     // MARK: - setup vc
     
     private func setupNavigationBar() {
-        self.title = "Tattoo List"
+        self.title = navigationTitle
         self.navigationController?.navigationBar.barTintColor = .lightGray
-        let leftButton = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(leftNavigationButtonAction))
-        let rightButton = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action:  #selector(rightNavigationButtonAction))
+        let leftButton = UIBarButtonItem(image: Constants.Images.home, style: .plain, target: self, action: #selector(leftNavigationButtonAction))
+        let rightButton = UIBarButtonItem(image: Constants.Images.info, style: .plain, target: self, action:  #selector(rightNavigationButtonAction))
         leftButton.tintColor = .black
         rightButton.tintColor = .black
 
@@ -130,7 +131,7 @@ extension PostsListViewController : UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postsCollectionView.postCellReuseIdentifier, for: indexPath) as! PostCollectionViewCell
         cell.setupCell(stringUrl: viewModel.getPost(at: indexPath).data.image.url)
-        cell.contentView.layer.cornerRadius = 20
+        cell.contentView.layer.cornerRadius = Constants.IndentsAndSizes.corner
         return cell
     }
     

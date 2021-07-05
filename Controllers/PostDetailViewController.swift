@@ -24,8 +24,10 @@ class PostDetailViewController: BaseViewController {
     //Properties
     var postId: Int?
     var viewModel: PostDetailViewModel = PostDetailViewModel(networkManager: NetworkManager())
-    private var isLiked = false
-    private var headerHeight: CGFloat = 610
+    private var headerHeight: CGFloat = Constants.IndentsAndSizes.headerHeight
+    private let navigationTitle = "Post Details"
+    private let headerView = "DetailHeaderView"
+    private let shareTitle = "Share current tattoo"
 
     // MARK: - Init
     
@@ -41,6 +43,7 @@ class PostDetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.delegate = self
         self.loadVC()
     }
     
@@ -96,7 +99,7 @@ class PostDetailViewController: BaseViewController {
     // MARK: - setup views
 
     private func setupRelatedCollectionView() {
-        relatedCollectionView.register(DetailHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: "DetailHeaderView")
+        relatedCollectionView.register(DetailHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: headerView)
         relatedCollectionView.dataSource = self
         relatedCollectionView.delegate = self
         relatedCollectionView.backgroundColor = .lightGray
@@ -108,7 +111,7 @@ class PostDetailViewController: BaseViewController {
     }
     
     private func setupViews() {
-        title = "Post Details"
+        title = navigationTitle
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
     }
@@ -116,7 +119,7 @@ class PostDetailViewController: BaseViewController {
     private func setupHeaderView(indexPath: IndexPath, kind: String) -> DetailHeaderView{
         let header = relatedCollectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                      withReuseIdentifier:
-                                                                        "DetailHeaderView",
+                                                                        headerView,
                                                                      for: indexPath) as! DetailHeaderView
         header.delegate = self
 
@@ -150,7 +153,8 @@ class PostDetailViewController: BaseViewController {
 
     @objc override func refreshData() {
         super.refreshData()
-        viewModel.getPostsHandlePagination(id: self.postId ?? 0)
+        guard let postID = self.postId else { return }
+        viewModel.getPostsHandlePagination(id: postID)
     }
     
     private func stopRefresher() {
@@ -160,9 +164,10 @@ class PostDetailViewController: BaseViewController {
     private func loadVC() {
         setupRelatedCollectionView()
         setupRefreshControl()
-        viewModel.delegate = self
-        viewModel.downloadPost(id: postId ?? 0)
-        viewModel.getPostsHandlePagination(id: postId ?? 0)
+        if let postID = postId {
+            viewModel.downloadPost(id: postID)
+            viewModel.getPostsHandlePagination(id: postID)
+        }
         setupMainScrollViewLayout()
         setupViews()
     }
@@ -197,6 +202,7 @@ extension PostDetailViewController: PostDetailViewUpdater {
 
 
 // MARK: - PostDetailViewController UICollectionViewDataSource, UICollectionViewDelegate
+
 extension PostDetailViewController : UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.getNumberOfRelatedPosts()
@@ -237,17 +243,18 @@ extension PostDetailViewController: PinterestLayoutDelegate {
     }
 }
 
-// MARK: - PostDetailViewController  PinterestLayoutDelegate
+// MARK: - PostDetailViewController  DetaiHeaderViewDelegate
 
 extension PostDetailViewController: DetaiHeaderViewDelegate {
     func shareDidTap() {
-        let string = "Share current tattoo"
         if let url = URL(string: viewModel.getPost()?.shareUrl ?? "") {
-            let vc = UIActivityViewController(activityItems: [string, url], applicationActivities: [])
+            let vc = UIActivityViewController(activityItems: [shareTitle, url], applicationActivities: [])
             self.present(vc, animated: true, completion: nil)
         }
     }
 }
+
+// MARK: - PostDetailViewController  UICollectionViewDelegateFlowLayout
 
 extension PostDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

@@ -17,6 +17,7 @@ class ArtistSectionView: UIView {
     private lazy var artistLabel = UILabel()
     private lazy var descriptionLabel = UILabel()
     
+    //properties
     private var artistStackViewHeightConstraint: NSLayoutConstraint?
     
     var artistImageURL: URL? = URL(string: "") {
@@ -25,7 +26,7 @@ class ArtistSectionView: UIView {
                 self.artistImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
                 self.artistImageView.sd_setImage(with: url)
             } else {
-                self.artistImageView.image = UIImage(systemName: "person.circle")
+                self.artistImageView.image = Constants.Images.avatar
                 self.artistImageView.tintColor = .black
             }
         }
@@ -43,6 +44,7 @@ class ArtistSectionView: UIView {
         }
     }
 
+    //init
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureViews()
@@ -53,6 +55,8 @@ class ArtistSectionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - setup views
+
     private func configureViews() {
         artistSectionView.backgroundColor = .white
         
@@ -71,6 +75,8 @@ class ArtistSectionView: UIView {
         descriptionLabel.textColor = .black
     }
     
+    // MARK: - setup Layout
+
     private func setupViewLayout() {
         self.addSubview(artistSectionView)
 
@@ -115,9 +121,9 @@ class ArtistSectionView: UIView {
         var height: CGFloat = 0
         
         if heightOfDescription <= Constants.IndentsAndSizes.spacing15*2 {
-            height = 50
+            height = Constants.IndentsAndSizes.artistDescriptionHeight
         } else {
-            height = heightOfDescription+40
+            height = heightOfDescription+Constants.IndentsAndSizes.circleItemsSize
         }
         self.artistStackViewHeightConstraint = NSLayoutConstraint(item: self.artistStackView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .height, multiplier: 1, constant: height)
         self.layoutIfNeeded()

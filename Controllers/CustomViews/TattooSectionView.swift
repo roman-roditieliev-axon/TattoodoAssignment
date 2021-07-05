@@ -13,6 +13,7 @@ protocol TappedSharedButtonDelegate: class {
 }
 
 class TattooSectionView: UIView {
+    
     //tattoo section UI elements
     private lazy var tattooImageView = UIImageView()
     private lazy var tattooBottomSectionView = UIView()
@@ -20,6 +21,7 @@ class TattooSectionView: UIView {
     private lazy var likeTattoButton = UIButton()
     private lazy var savesLabel = UILabel()
     
+    //properties
     private var isLiked = false
     weak var delegate: TappedSharedButtonDelegate?
     
@@ -36,7 +38,7 @@ class TattooSectionView: UIView {
         }
     }
 
-    
+    //init
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureViews()
@@ -47,17 +49,19 @@ class TattooSectionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - setup views
+
     private func configureViews() {
         tattooBottomSectionView.backgroundColor = .white
         tattooImageView.contentMode = .scaleAspectFill
         tattooImageView.clipsToBounds = true
         
-        likeTattoButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        likeTattoButton.setImage(Constants.Images.like, for: .normal)
         likeTattoButton.tintColor = .black
         likeTattoButton.addTarget(self, action: #selector(likeDidTap), for: .allEvents)
         likeTattoButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
 
-        shareTattoButton.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        shareTattoButton.setImage(Constants.Images.share, for: .normal)
         shareTattoButton.tintColor = .black
         shareTattoButton.addTarget(self, action: #selector(shareDidTap), for: .allEvents)
         shareTattoButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
@@ -66,6 +70,8 @@ class TattooSectionView: UIView {
         savesLabel.font = UIFont.systemFont(ofSize: 14)
     }
     
+    // MARK: - setup Layout
+
     private func setupViewLayout() {
         self.addSubview(tattooImageView)
         self.addSubview(tattooBottomSectionView)
@@ -86,7 +92,7 @@ class TattooSectionView: UIView {
             tattooBottomSectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             tattooBottomSectionView.heightAnchor.constraint(equalToConstant: Constants.IndentsAndSizes.tattooShareSectionHeight),
             tattooBottomSectionView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            tattooBottomSectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
+            tattooBottomSectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
         
         tattooBottomSectionViewLayout()
@@ -128,11 +134,11 @@ class TattooSectionView: UIView {
 
     @objc private func likeDidTap() {
         if !isLiked {
-            self.savesLabel.text = "\(savesCount+1) pins"
+            savesCount += 1
             isLiked = true
             likeTattoButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
         } else {
-            self.savesLabel.text = "\(savesCount) pins"
+            savesLabel.text = "\(savesCount) pins"
             isLiked = false
             likeTattoButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         }
