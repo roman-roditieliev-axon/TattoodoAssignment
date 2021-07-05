@@ -62,7 +62,7 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
             case.success(let data):
                 if let post = data?.data {
                     self?.post = post
-                    self?.delegate?.showDetails(of: post)
+                    self?.delegate?.reload()
                 }
             case .failure(let error):
                 print(error)

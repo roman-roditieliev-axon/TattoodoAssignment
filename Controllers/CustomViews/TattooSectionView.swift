@@ -49,7 +49,7 @@ class TattooSectionView: UIView {
     
     private func configureViews() {
         tattooBottomSectionView.backgroundColor = .white
-        tattooImageView.contentMode = .scaleToFill
+        tattooImageView.contentMode = .scaleAspectFill
         tattooImageView.clipsToBounds = true
         
         likeTattoButton.setImage(UIImage(systemName: "heart"), for: .normal)

@@ -56,7 +56,7 @@ class ArtistSectionView: UIView {
     private func configureViews() {
         artistSectionView.backgroundColor = .white
         
-        artistStackView.distribution = .fillProportionally
+        artistStackView.distribution = .fill
         artistStackView.axis = .vertical
         artistStackView.spacing = 5
         
@@ -108,25 +108,19 @@ class ArtistSectionView: UIView {
             artistStackView.trailingAnchor.constraint(equalTo: artistSectionView.trailingAnchor, constant: -Constants.IndentsAndSizes.spacing15),
             artistStackView.bottomAnchor.constraint(equalTo: artistSectionView.bottomAnchor, constant: -Constants.IndentsAndSizes.spacing10),
         ])
-        
-        artistLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            artistLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.IndentsAndSizes.spacing15)
-        ])
     }
     
     func setupArtistHeightConstraint(post: PostDetail?) -> CGFloat {
         let heightOfDescription = post?.description.height(withConstrainedWidth: self.artistStackView.frame.width, font: .systemFont(ofSize: 16)) ?? 0
-        self.artistStackViewHeightConstraint?.isActive = false
         var height: CGFloat = 0
         
         if heightOfDescription <= Constants.IndentsAndSizes.spacing15*2 {
             height = 50
         } else {
-            height = heightOfDescription+50
+            height = heightOfDescription+40
         }
-        self.artistStackViewHeightConstraint = NSLayoutConstraint(item: self.artistStackView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: height)
-        self.artistStackViewHeightConstraint?.isActive = true
+        self.artistStackViewHeightConstraint = NSLayoutConstraint(item: self.artistStackView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .height, multiplier: 1, constant: height)
+        self.layoutIfNeeded()
         return height
     }
     

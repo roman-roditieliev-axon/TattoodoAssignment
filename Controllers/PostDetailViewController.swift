@@ -11,7 +11,6 @@ import SDWebImage
 // MARK: - PostDetailViewUpdater
 protocol PostDetailViewUpdater: class {
     func updateActivityIndicator(isLoading: Bool)
-    func showDetails(of post: PostDetail)
     func reload()
 }
 
@@ -47,7 +46,7 @@ class PostDetailViewController: BaseViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        relatedSectionView.roundCorners([.allCorners], radius: Constants.IndentsAndSizes.corner)
+        relatedSectionView.roundCorners([.topLeft, .topRight], radius: Constants.IndentsAndSizes.corner)
     }
     
     // MARK: - setup Layout
@@ -61,7 +60,6 @@ class PostDetailViewController: BaseViewController {
             relatedSectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             relatedSectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             relatedSectionView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            relatedSectionView.heightAnchor.constraint(equalToConstant: Constants.IndentsAndSizes.relatedViewHeight),
             relatedSectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
 
@@ -69,15 +67,14 @@ class PostDetailViewController: BaseViewController {
     }
     
     private func addRelatedBackgroundView() {
-        view.addSubview(relatedBackgroundView)
+        self.view.addSubview(relatedBackgroundView)
         relatedBackgroundView.backgroundColor = .white
         relatedBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            relatedBackgroundView.topAnchor.constraint(equalTo: relatedCollectionView.cellForItem(at: IndexPath(item: 0, section: 0))?.topAnchor ?? relatedCollectionView.topAnchor),
-            relatedBackgroundView.leadingAnchor.constraint(equalTo: relatedCollectionView.leadingAnchor),
-            relatedBackgroundView.trailingAnchor.constraint(equalTo: relatedCollectionView.trailingAnchor),
-            relatedBackgroundView.widthAnchor.constraint(equalTo: relatedCollectionView.widthAnchor),
-            relatedBackgroundView.heightAnchor.constraint(equalToConstant: Constants.IndentsAndSizes.relatedViewHeight),
+            relatedBackgroundView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: headerHeight),
+            relatedBackgroundView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            relatedBackgroundView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            relatedBackgroundView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
             relatedBackgroundView.bottomAnchor.constraint(equalTo: relatedCollectionView.bottomAnchor),
         ])
 
@@ -92,7 +89,7 @@ class PostDetailViewController: BaseViewController {
             relatedCollectionView.topAnchor.constraint(equalTo: relatedSectionView.topAnchor, constant: Constants.IndentsAndSizes.spacing10),
             relatedCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             relatedCollectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            relatedCollectionView.bottomAnchor.constraint(equalTo: relatedSectionView.bottomAnchor, constant: -Constants.IndentsAndSizes.spacing10),
+            relatedCollectionView.bottomAnchor.constraint(equalTo: relatedSectionView.bottomAnchor, constant: Constants.IndentsAndSizes.spacing10),
         ])
     }
     
@@ -122,8 +119,6 @@ class PostDetailViewController: BaseViewController {
                                                                         "DetailHeaderView",
                                                                      for: indexPath) as! DetailHeaderView
         header.delegate = self
-        header.tattooSectionView.setButtonsCorners()
-        header.artistSectionView.roundCorners(.allCorners, radius: Constants.IndentsAndSizes.corner)
 
         if let post = viewModel.getPost() {
             if let imageUrl = URL(string: post.image.url) {
@@ -135,7 +130,12 @@ class PostDetailViewController: BaseViewController {
             header.artistImageURL = artistImageUrl
             header.artistName = post.artist?.name ?? ""
             header.artistDescription = post.description
-            headerHeight = Constants.IndentsAndSizes.tattooImageHeight + Constants.IndentsAndSizes.tattooShareSectionHeight + (Constants.IndentsAndSizes.spacing10*2) + (Constants.IndentsAndSizes.spacing15) + header.artistSectionView.setupArtistHeightConstraint(post: post)
+            headerHeight = Constants.IndentsAndSizes.tattooImageHeight + Constants.IndentsAndSizes.tattooShareSectionHeight + (Constants.IndentsAndSizes.spacing10) + (Constants.IndentsAndSizes.spacing15*2) + header.artistSectionView.setupArtistHeightConstraint(post: post)
+            if let layout = self.relatedCollectionView.collectionViewLayout as? PinterestLayout {
+                layout.headerReferenceSize = CGSize(width: self.relatedCollectionView.frame.size.width, height: headerHeight)
+            }
+            header.tattooSectionView.setButtonsCorners()
+            header.artistSectionView.roundCorners(.allCorners, radius: Constants.IndentsAndSizes.corner)
         }
         return header
     }
@@ -181,7 +181,9 @@ class PostDetailViewController: BaseViewController {
 extension PostDetailViewController: PostDetailViewUpdater {
     func reload() {
         DispatchQueue.main.async {
+            self.relatedCollectionView.collectionViewLayout.invalidateLayout()
             self.relatedCollectionView.reloadData()
+            self.relatedCollectionView.layoutIfNeeded()
             self.stopRefresher()
         }
     }
@@ -190,10 +192,6 @@ extension PostDetailViewController: PostDetailViewUpdater {
         DispatchQueue.main.async {
             isLoading ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
         }
-    }
-    
-    func showDetails(of post: PostDetail) {
-        
     }
 }
 
@@ -253,6 +251,6 @@ extension PostDetailViewController: DetaiHeaderViewDelegate {
 
 extension PostDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: headerHeight) //add your height here
+        return CGSize(width: collectionView.frame.width, height: headerHeight)
     }
 }

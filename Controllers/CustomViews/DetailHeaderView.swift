@@ -83,10 +83,7 @@ class DetailHeaderView: UICollectionViewCell {
             artistSectionView.widthAnchor.constraint(equalTo: self.widthAnchor),
             artistSectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constants.IndentsAndSizes.spacing15),
         ])
-        
     }
-    
-    
 }
 
 extension DetailHeaderView: TappedSharedButtonDelegate {
