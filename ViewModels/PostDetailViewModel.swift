@@ -75,18 +75,16 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
             isLoading = true
             let oldPosts = self.relatedPosts
             self.downloadRelatedPosts(id: id) { [weak self] data in
-                if let strPosts = data?.data {
-                    self?.relatedPosts = oldPosts + strPosts
-                    self?.isLoading = false
-                    self?.page += 1
-                    self?.delegate?.reload()
-                }
+                self?.relatedPosts = oldPosts + data
+                self?.isLoading = false
+                self?.page += 1
+                self?.delegate?.reload()
             }
         }
     }
     
-    private func downloadRelatedPosts(id: Int,completion: @escaping (RelatedPostsResponse?) -> Void) {
-        self.networkManager.getRelatedPosts(page: self.page, postId: id)  { response in
+    private func downloadRelatedPosts(id: Int,completion: @escaping ([Post]) -> Void) {
+        self.networkManager.getRelatedPosts(page: self.page, postId: id)  { (_ response: ResponseData<Post>) in
             switch response {
             case.success(let data):
                 completion(data)

@@ -51,18 +51,16 @@ class PostsListViewModel: PostsListPresenterProtocol {
             isLoading = true
             let oldPosts = self.posts
             self.downloadPosts { [weak self] data in
-                if let strPosts = data?.data {
-                    self?.posts = oldPosts + strPosts
-                    self?.isLoading = false
-                    self?.page += 1
-                    self?.delegate?.reload()
-                }
+                self?.posts = oldPosts + data
+                self?.isLoading = false
+                self?.page += 1
+                self?.delegate?.reload()
             }
         }
     }
     
-    private func downloadPosts(completion: @escaping (PostsResponse?) -> Void) {
-        self.networkManager.getPosts(page: self.page) { response in
+    private func downloadPosts(completion: @escaping ([PostList]) -> Void) {
+        self.networkManager.getPosts(page: self.page) { (_ response: ResponseData<PostList>)  in
             switch response {
             case.success(let data):
                 completion(data)

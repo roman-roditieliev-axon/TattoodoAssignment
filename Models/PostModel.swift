@@ -7,14 +7,22 @@
 
 import Foundation
 
-struct PostList: Decodable {
+struct PostList: Decodable, Equatable {
     let data: Post
+    
+    static func == (lhs: PostList, rhs: PostList) -> Bool {
+        return true
+    }
 }
 
-struct Post: Decodable {
+struct Post: Decodable, Equatable {
     let id: Int
     let description: String
     let image: Image
+    
+    static func == (lhs: Post, rhs: Post) -> Bool {
+        return true
+    }
 }
 
 struct Image: Decodable {
