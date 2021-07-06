@@ -39,11 +39,13 @@
 		CE02BD05268E03EF005B6145 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BD04268E03EF005B6145 /* Constants.swift */; };
 		CE02BD08268F0BE3005B6145 /* DetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BD07268F0BE3005B6145 /* DetailHeaderView.swift */; };
 		CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3260F26843F4A00A6E884 /* AppDelegate.swift */; };
+		DC8731E8F2B80A4027E6C96F /* Pods_TattoodoAssignment__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9205E9B6C54DB561CAD6A96D /* Pods_TattoodoAssignment__iOS_.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		193E36427A7832F9D0BEE1CD /* Pods-TattoodoAssignment (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TattoodoAssignment (iOS).release.xcconfig"; path = "Target Support Files/Pods-TattoodoAssignment (iOS)/Pods-TattoodoAssignment (iOS).release.xcconfig"; sourceTree = "<group>"; };
 		426059A8AB51E0AD9E1ED3BF /* Pods-TattoodoAssignment (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TattoodoAssignment (iOS).debug.xcconfig"; path = "Target Support Files/Pods-TattoodoAssignment (iOS)/Pods-TattoodoAssignment (iOS).debug.xcconfig"; sourceTree = "<group>"; };
+		9205E9B6C54DB561CAD6A96D /* Pods_TattoodoAssignment__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TattoodoAssignment__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE02BC2926845183005B6145 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CE02BC2C26845657005B6145 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		CE02BC3026845BEB005B6145 /* PostDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailModel.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC8731E8F2B80A4027E6C96F /* Pods_TattoodoAssignment__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +100,14 @@
 				193E36427A7832F9D0BEE1CD /* Pods-TattoodoAssignment (iOS).release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		7A0F3D3D8CD93CE02ECA1710 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9205E9B6C54DB561CAD6A96D /* Pods_TattoodoAssignment__iOS_.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		CE02BC4626847075005B6145 /* Encoding */ = {
@@ -171,6 +182,7 @@
 				CE634FF826833F8100EF0E27 /* Products */,
 				CE634FEF26833F8000EF0E27 /* Resource */,
 				CEC326152684408300A6E884 /* ViewModels */,
+				7A0F3D3D8CD93CE02ECA1710 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -247,6 +259,7 @@
 				CE634FF426833F8100EF0E27 /* Frameworks */,
 				CE634FF526833F8100EF0E27 /* Resources */,
 				6681D80F39A0D4E1E339BFC9 /* [CP] Embed Pods Frameworks */,
+				CEF0353926941EE600DF756F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -318,6 +331,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TattoodoAssignment (iOS)/Pods-TattoodoAssignment (iOS)-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		CEF0353926941EE600DF756F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\n  \"${PODS_ROOT}/SwiftLint/swiftlint\" --config .swiflint.yml\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		FCD14404B15DA4D4CA7F31CA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
