@@ -7,13 +7,8 @@
 
 import Foundation
 
-struct PostsResponse: Decodable {
-    let data: [PostList]
-    let meta: ResponseMetadata
-}
-
-struct RelatedPostsResponse: Decodable {
-    let data: [Post]
+struct PostsResponse<T: Decodable>: Decodable where T: Equatable {
+    let data: [T]
     let meta: ResponseMetadata
 }
 

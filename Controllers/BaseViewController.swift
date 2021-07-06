@@ -8,6 +8,7 @@
 import UIKit
 
 class BaseViewController: UIViewController {
+    
     let customFlowLayout = PinterestLayout()
     var refreshControl: UIRefreshControl!
     var activityIndicator = UIActivityIndicatorView(style: .medium)
@@ -19,5 +20,13 @@ class BaseViewController: UIViewController {
     }
     
     @objc func refreshData() {
+    }
+    
+    func calculateHeightOfCollectionItem(imageWidth: CGFloat, imageHeight: CGFloat) -> CGFloat {
+        let collectionViewWidth = self.customFlowLayout.collectionView?.frame.width ?? 0
+        let cellWidth = (collectionViewWidth-customFlowLayout.cellPadding*2)/CGFloat(customFlowLayout.numberOfColumns)
+        let coeficient = cellWidth/imageWidth
+        let heightOfCell = imageHeight*coeficient
+        return heightOfCell
     }
 }

@@ -11,11 +11,10 @@ import UIKit
 class AppDelegate: NSObject, UIApplicationDelegate {
     
     var window: UIWindow?
-    var appCoordinator: AppCoordinator!
+    var appCoordinator: MainCoordinator!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
-        appCoordinator = AppCoordinator(window: window)
+        appCoordinator = MainCoordinator()
         appCoordinator.start()
         return true
     }

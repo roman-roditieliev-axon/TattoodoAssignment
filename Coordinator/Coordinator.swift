@@ -21,6 +21,7 @@ class Coordinator {
 
     func addChildCoordinator(_ coordinator: Coordinator) {
         childCoordinators.append(coordinator)
+        coordinator.start()
     }
 
     func removeChildCoordinator(_ coordinator: Coordinator) {

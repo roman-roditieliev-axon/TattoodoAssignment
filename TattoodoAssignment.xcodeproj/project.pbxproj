@@ -20,8 +20,8 @@
 		CE02BC5026847107005B6145 /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC4F26847107005B6145 /* JSONParameterEncoder.swift */; };
 		CE02BC6B26847EAC005B6145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE02BC6A26847EAC005B6145 /* Assets.xcassets */; };
 		CE02BC752684B9CF005B6145 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC742684B9CF005B6145 /* Coordinator.swift */; };
-		CE02BC792684BA27005B6145 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC782684BA27005B6145 /* AppCoordinator.swift */; };
-		CE02BC7C2684C2B9005B6145 /* InputCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC7B2684C2B9005B6145 /* InputCoordinator.swift */; };
+		CE02BC792684BA27005B6145 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC782684BA27005B6145 /* MainCoordinator.swift */; };
+		CE02BC7C2684C2B9005B6145 /* DetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC7B2684C2B9005B6145 /* DetailCoordinator.swift */; };
 		CE02BC7F26850B6D005B6145 /* PostsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */; };
 		CE02BC8526850F31005B6145 /* PostsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC8426850F31005B6145 /* PostsListViewModel.swift */; };
 		CE02BC962685DEE4005B6145 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BC942685DEE4005B6145 /* PostCollectionViewCell.swift */; };
@@ -33,12 +33,19 @@
 		CE02BCC4268AFA34005B6145 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCC3268AFA34005B6145 /* StringExtension.swift */; };
 		CE02BCC9268B5F1B005B6145 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCC8268B5F1B005B6145 /* BaseViewController.swift */; };
 		CE02BCD0268B60D0005B6145 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		CE02BCF8268DC21F005B6145 /* TattooCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCF7268DC21F005B6145 /* TattooCollectionView.swift */; };
+		CE02BCFF268E0285005B6145 /* TattooSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BCFE268E0285005B6145 /* TattooSectionView.swift */; };
+		CE02BD02268E0298005B6145 /* ArtistSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BD01268E0298005B6145 /* ArtistSectionView.swift */; };
+		CE02BD05268E03EF005B6145 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BD04268E03EF005B6145 /* Constants.swift */; };
+		CE02BD08268F0BE3005B6145 /* DetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02BD07268F0BE3005B6145 /* DetailHeaderView.swift */; };
 		CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3260F26843F4A00A6E884 /* AppDelegate.swift */; };
+		DC8731E8F2B80A4027E6C96F /* Pods_TattoodoAssignment__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9205E9B6C54DB561CAD6A96D /* Pods_TattoodoAssignment__iOS_.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		193E36427A7832F9D0BEE1CD /* Pods-TattoodoAssignment (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TattoodoAssignment (iOS).release.xcconfig"; path = "Target Support Files/Pods-TattoodoAssignment (iOS)/Pods-TattoodoAssignment (iOS).release.xcconfig"; sourceTree = "<group>"; };
 		426059A8AB51E0AD9E1ED3BF /* Pods-TattoodoAssignment (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TattoodoAssignment (iOS).debug.xcconfig"; path = "Target Support Files/Pods-TattoodoAssignment (iOS)/Pods-TattoodoAssignment (iOS).debug.xcconfig"; sourceTree = "<group>"; };
+		9205E9B6C54DB561CAD6A96D /* Pods_TattoodoAssignment__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TattoodoAssignment__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE02BC2926845183005B6145 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CE02BC2C26845657005B6145 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		CE02BC3026845BEB005B6145 /* PostDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailModel.swift; sourceTree = "<group>"; };
@@ -52,8 +59,8 @@
 		CE02BC4F26847107005B6145 /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
 		CE02BC6A26847EAC005B6145 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE02BC742684B9CF005B6145 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
-		CE02BC782684BA27005B6145 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		CE02BC7B2684C2B9005B6145 /* InputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCoordinator.swift; sourceTree = "<group>"; };
+		CE02BC782684BA27005B6145 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		CE02BC7B2684C2B9005B6145 /* DetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoordinator.swift; sourceTree = "<group>"; };
 		CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListViewController.swift; sourceTree = "<group>"; };
 		CE02BC8426850F31005B6145 /* PostsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListViewModel.swift; sourceTree = "<group>"; };
 		CE02BC942685DEE4005B6145 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -64,6 +71,11 @@
 		CE02BCC0268AE500005B6145 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		CE02BCC3268AFA34005B6145 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		CE02BCC8268B5F1B005B6145 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		CE02BCF7268DC21F005B6145 /* TattooCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooCollectionView.swift; sourceTree = "<group>"; };
+		CE02BCFE268E0285005B6145 /* TattooSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooSectionView.swift; sourceTree = "<group>"; };
+		CE02BD01268E0298005B6145 /* ArtistSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSectionView.swift; sourceTree = "<group>"; };
+		CE02BD04268E03EF005B6145 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CE02BD07268F0BE3005B6145 /* DetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderView.swift; sourceTree = "<group>"; };
 		CE634FF726833F8100EF0E27 /* TattoodoAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TattoodoAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE634FFA26833F8100EF0E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEC3260F26843F4A00A6E884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC8731E8F2B80A4027E6C96F /* Pods_TattoodoAssignment__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +100,14 @@
 				193E36427A7832F9D0BEE1CD /* Pods-TattoodoAssignment (iOS).release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		7A0F3D3D8CD93CE02ECA1710 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9205E9B6C54DB561CAD6A96D /* Pods_TattoodoAssignment__iOS_.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		CE02BC4626847075005B6145 /* Encoding */ = {
@@ -103,8 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				CE02BC742684B9CF005B6145 /* Coordinator.swift */,
-				CE02BC782684BA27005B6145 /* AppCoordinator.swift */,
-				CE02BC7B2684C2B9005B6145 /* InputCoordinator.swift */,
+				CE02BC7B2684C2B9005B6145 /* DetailCoordinator.swift */,
+				CE02BC782684BA27005B6145 /* MainCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -120,19 +141,30 @@
 		CE02BCAF26862359005B6145 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				CE02BCC3268AFA34005B6145 /* StringExtension.swift */,
 				CE02BCB0268623A1005B6145 /* UIScrollViewExtension.swift */,
 				CE02BCC0268AE500005B6145 /* UIViewExtension.swift */,
-				CE02BCC3268AFA34005B6145 /* StringExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		CE02BCCC268B5F26005B6145 /* Helpers */ = {
+		CE02BCCC268B5F26005B6145 /* TattooCollectionView */ = {
 			isa = PBXGroup;
 			children = (
 				CE02BC9C2685ECDB005B6145 /* PinterestLayout.swift */,
+				CE02BCF7268DC21F005B6145 /* TattooCollectionView.swift */,
 			);
-			path = Helpers;
+			path = TattooCollectionView;
+			sourceTree = "<group>";
+		};
+		CE02BCFD268E024B005B6145 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				CE02BCFE268E0285005B6145 /* TattooSectionView.swift */,
+				CE02BD01268E0298005B6145 /* ArtistSectionView.swift */,
+				CE02BD07268F0BE3005B6145 /* DetailHeaderView.swift */,
+			);
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 		CE634FEA26833F8000EF0E27 = {
@@ -143,13 +175,14 @@
 				CEC32616268440A000A6E884 /* Controllers */,
 				CE02BC722684B9A7005B6145 /* Coordinator */,
 				CE02BCAF26862359005B6145 /* Extensions */,
-				CE02BCCC268B5F26005B6145 /* Helpers */,
+				CE02BCCC268B5F26005B6145 /* TattooCollectionView */,
 				CEC326142684407D00A6E884 /* Models */,
 				CEC326172684429400A6E884 /* Network */,
 				54DB27D5E08C98BB34B1707D /* Pods */,
 				CE634FF826833F8100EF0E27 /* Products */,
 				CE634FEF26833F8000EF0E27 /* Resource */,
 				CEC326152684408300A6E884 /* ViewModels */,
+				7A0F3D3D8CD93CE02ECA1710 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -157,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				CE02BC6A26847EAC005B6145 /* Assets.xcassets */,
+				CE02BD04268E03EF005B6145 /* Constants.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -172,8 +206,8 @@
 		CEC326142684407D00A6E884 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CE02BC2C26845657005B6145 /* PostModel.swift */,
 				CE02BC3026845BEB005B6145 /* PostDetailModel.swift */,
+				CE02BC2C26845657005B6145 /* PostModel.swift */,
 				CE02BC3426845D26005B6145 /* PostsResponseModel.swift */,
 			);
 			path = Models;
@@ -192,9 +226,10 @@
 			isa = PBXGroup;
 			children = (
 				CE02BC932685DE91005B6145 /* Cells */,
-				CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */,
-				CE02BCB42688D0F3005B6145 /* PostDetailViewController.swift */,
+				CE02BCFD268E024B005B6145 /* CustomViews */,
 				CE02BCC8268B5F1B005B6145 /* BaseViewController.swift */,
+				CE02BCB42688D0F3005B6145 /* PostDetailViewController.swift */,
+				CE02BC7E26850B6D005B6145 /* PostsListViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -224,6 +259,7 @@
 				CE634FF426833F8100EF0E27 /* Frameworks */,
 				CE634FF526833F8100EF0E27 /* Resources */,
 				6681D80F39A0D4E1E339BFC9 /* [CP] Embed Pods Frameworks */,
+				CEF0353926941EE600DF756F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -296,6 +332,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TattoodoAssignment (iOS)/Pods-TattoodoAssignment (iOS)-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CEF0353926941EE600DF756F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\n  \"${PODS_ROOT}/SwiftLint/swiftlint\" --config .swiflint.yml\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 		FCD14404B15DA4D4CA7F31CA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -326,8 +379,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE02BC9D2685ECDB005B6145 /* PinterestLayout.swift in Sources */,
+				CE02BCF8268DC21F005B6145 /* TattooCollectionView.swift in Sources */,
 				CE02BCB52688D0F4005B6145 /* PostDetailViewController.swift in Sources */,
+				CE02BCFF268E0285005B6145 /* TattooSectionView.swift in Sources */,
 				CE02BC4126846E94005B6145 /* NetworkLogger.swift in Sources */,
+				CE02BD05268E03EF005B6145 /* Constants.swift in Sources */,
+				CE02BD02268E0298005B6145 /* ArtistSectionView.swift in Sources */,
 				CE02BC4426846EC8005B6145 /* NetworkRouter.swift in Sources */,
 				CE02BC752684B9CF005B6145 /* Coordinator.swift in Sources */,
 				CE02BCB92688D400005B6145 /* PostDetailViewModel.swift in Sources */,
@@ -335,11 +392,12 @@
 				CE02BC4C268470C4005B6145 /* URLParameterEncoding.swift in Sources */,
 				CEC3261026843F4A00A6E884 /* AppDelegate.swift in Sources */,
 				CE02BC2D26845657005B6145 /* PostModel.swift in Sources */,
-				CE02BC792684BA27005B6145 /* AppCoordinator.swift in Sources */,
+				CE02BD08268F0BE3005B6145 /* DetailHeaderView.swift in Sources */,
+				CE02BC792684BA27005B6145 /* MainCoordinator.swift in Sources */,
 				CE02BC2A26845183005B6145 /* NetworkManager.swift in Sources */,
 				CE02BC4826847086005B6145 /* ParameterEncoding.swift in Sources */,
 				CE02BCC4268AFA34005B6145 /* StringExtension.swift in Sources */,
-				CE02BC7C2684C2B9005B6145 /* InputCoordinator.swift in Sources */,
+				CE02BC7C2684C2B9005B6145 /* DetailCoordinator.swift in Sources */,
 				CE02BC3526845D26005B6145 /* PostsResponseModel.swift in Sources */,
 				CE02BC8526850F31005B6145 /* PostsListViewModel.swift in Sources */,
 				CE02BC3126845BEB005B6145 /* PostDetailModel.swift in Sources */,

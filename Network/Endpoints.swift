@@ -14,7 +14,7 @@ enum PostsEndpoints: RequestType {
 }
 
 extension PostsEndpoints {
-    var api: String { "https://backend-api-sta.tattoodo.com/api/v2" }
+    var api: String { "https://backend-api.tattoodo.com/api/v2" }
     
     var baseURL: URL {
         guard let url = URL(string: api) else { fatalError("URL Error") }

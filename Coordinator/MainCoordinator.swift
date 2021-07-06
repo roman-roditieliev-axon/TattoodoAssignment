@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AppCoordinator: Coordinator {
+class MainCoordinator: Coordinator {
         
     let window: UIWindow?
     lazy var rootViewController: PostsListViewController = {
@@ -16,7 +16,8 @@ class AppCoordinator: Coordinator {
  
     // MARK: - Init
     
-    init(window: UIWindow?) {
+    override init() {
+        let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
     }
 

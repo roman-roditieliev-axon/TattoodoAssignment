@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PostsListPresenterProtocol: class {
-    func getPosts()
+    func getPostsHandlePagination()
     func getNumberOfPosts() -> Int
     func getPost(at indexPath: IndexPath) -> PostList
     func didScrollToBottom()
@@ -19,19 +19,22 @@ class PostsListViewModel: PostsListPresenterProtocol {
     private let networkManager: NetworkManager
     private var posts: [PostList] = []
     private var page = 1
+    private let limit = 10
     weak var delegate: MainViewUpdater?
     var isLoading = false {
         didSet {
-            self.isLoadingData(isLoading: isLoading)
+            self.delegate?.updateActivityIndicator(isLoading: isLoading)
         }
     }
 
     // MARK: - Init
+
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
     }
     
     // MARK: - PostsListPresenterProtocol
+
     func getNumberOfPosts() -> Int {
         self.isLoading = false
         return self.posts.count
@@ -42,34 +45,32 @@ class PostsListViewModel: PostsListPresenterProtocol {
     }
     
     func didScrollToBottom() {
-        getPosts()
+        getPostsHandlePagination()
     }
     
-    func getPosts() {
-        if !isLoading {
+    func getPostsHandlePagination() {
+        if !isLoading && (self.posts.count == (self.page-1)*limit || self.page == 1) {
             isLoading = true
-            if self.posts.count == (self.page-1)*10  || self.page == 1 {
-                let oldPosts = self.posts
-                self.networkManager.getPosts(page: self.page) { (posts, error) in
-                    if let strPosts = posts?.data {
-                        self.posts = oldPosts + strPosts
-                        self.isLoading = false
-                        self.page += 1
-                        self.delegate?.reload(indexPaths: self.indexToInsert(postsCount: strPosts.count))
-                    }
-                }
+            let oldPosts = self.posts
+            self.downloadPosts { [weak self] data in
+                self?.posts = oldPosts + data
+                self?.isLoading = false
+                self?.page += 1
+                self?.delegate?.reload()
             }
         }
     }
-    
-    // MARK: - private funcs
-    private func isLoadingData(isLoading: Bool) {
-        self.delegate?.updateActivityIndicator(isLoading: isLoading)
-    }
-    
-    private func indexToInsert(postsCount: Int) -> [IndexPath] {
-        let oldPostsCount = self.getNumberOfPosts() - postsCount
-        guard postsCount > 0 else { return [] }
-        return (oldPostsCount..<(oldPostsCount + postsCount)).map { IndexPath(row: $0, section: 0) }
+
+    // MARK: - network requests
+
+    private func downloadPosts(completion: @escaping ([PostList]) -> Void) {
+        self.networkManager.getPosts(page: self.page) { (_ response: ResponseData<PostList>)  in
+            switch response {
+            case.success(let data):
+                completion(data)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
