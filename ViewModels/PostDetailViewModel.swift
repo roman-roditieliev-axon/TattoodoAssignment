@@ -32,10 +32,13 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
     }
     
     // MARK: - Methods
+
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
     }
-    
+
+    // MARK: - PostDetailPresenterProtocol
+
     func getNumberOfPins() -> Int {
         return self.post?.counts.pins ?? 0
     }
@@ -56,6 +59,19 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
         getPostsHandlePagination(id: id)
     }
     
+    func getPostsHandlePagination(id: Int) {
+        if !isLoading && (self.relatedPosts.count == (self.page-1)*limit || self.page == 1) {
+            isLoading = true
+            let oldPosts = self.relatedPosts
+            self.downloadRelatedPosts(id: id) { [weak self] data in
+                self?.relatedPosts = oldPosts + data
+                self?.isLoading = false
+                self?.page += 1
+                self?.delegate?.reload()
+            }
+        }
+    }
+
     func downloadPost(id: Int) {
         networkManager.getPostById(postId: id) { [weak self] response in
             switch response {
@@ -69,20 +85,7 @@ class PostDetailViewModel: PostDetailPresenterProtocol {
             }
         }
     }
-    
-    func getPostsHandlePagination(id: Int) {
-        if !isLoading && (self.relatedPosts.count == (self.page-1)*limit || self.page == 1) {
-            isLoading = true
-            let oldPosts = self.relatedPosts
-            self.downloadRelatedPosts(id: id) { [weak self] data in
-                self?.relatedPosts = oldPosts + data
-                self?.isLoading = false
-                self?.page += 1
-                self?.delegate?.reload()
-            }
-        }
-    }
-    
+
     private func downloadRelatedPosts(id: Int,completion: @escaping ([Post]) -> Void) {
         self.networkManager.getRelatedPosts(page: self.page, postId: id)  { (_ response: ResponseData<Post>) in
             switch response {

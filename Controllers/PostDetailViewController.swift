@@ -54,7 +54,7 @@ class PostDetailViewController: BaseViewController {
     
     // MARK: - setup Layout
     
-    private func setupMainScrollViewLayout() {
+    private func setupMainLayout() {
         view.addSubview(relatedSectionView)
         
         relatedSectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,25 +66,10 @@ class PostDetailViewController: BaseViewController {
             relatedSectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
 
-        setupRelatedSectionViewLayout()
+        setupRelatedCollectionViewLayout()
     }
     
-    private func addRelatedBackgroundView() {
-        self.view.addSubview(relatedBackgroundView)
-        relatedBackgroundView.backgroundColor = .white
-        relatedBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            relatedBackgroundView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: headerHeight),
-            relatedBackgroundView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            relatedBackgroundView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            relatedBackgroundView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
-            relatedBackgroundView.bottomAnchor.constraint(equalTo: relatedCollectionView.bottomAnchor),
-        ])
-
-    }
-    
-    //3rd section
-    private func setupRelatedSectionViewLayout() {
+    private func setupRelatedCollectionViewLayout() {
         relatedSectionView.addSubview(relatedCollectionView)
     
         relatedCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -128,7 +113,6 @@ class PostDetailViewController: BaseViewController {
                 header.tattooImageURL = imageUrl
             }
             header.savesCount = post.counts.pins
-            
             let artistImageUrl = URL(string: post.artist?.imageUrl ?? "")
             header.artistImageURL = artistImageUrl
             header.artistName = post.artist?.name ?? ""
@@ -137,9 +121,11 @@ class PostDetailViewController: BaseViewController {
             if let layout = self.relatedCollectionView.collectionViewLayout as? PinterestLayout {
                 layout.headerReferenceSize = CGSize(width: self.relatedCollectionView.frame.size.width, height: headerHeight)
             }
-            header.tattooSectionView.setButtonsCorners()
-            header.artistSectionView.roundCorners(.allCorners, radius: Constants.IndentsAndSizes.corner)
         }
+
+        header.tattooSectionView.setButtonsCorners()
+        header.artistSectionView.roundCorners(.allCorners, radius: Constants.IndentsAndSizes.corner)
+
         return header
     }
     
@@ -168,7 +154,7 @@ class PostDetailViewController: BaseViewController {
             viewModel.downloadPost(id: postID)
             viewModel.getPostsHandlePagination(id: postID)
         }
-        setupMainScrollViewLayout()
+        setupMainLayout()
         setupViews()
     }
     

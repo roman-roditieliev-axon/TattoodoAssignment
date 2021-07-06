@@ -28,11 +28,13 @@ class PostsListViewModel: PostsListPresenterProtocol {
     }
 
     // MARK: - Init
+
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
     }
     
     // MARK: - PostsListPresenterProtocol
+
     func getNumberOfPosts() -> Int {
         self.isLoading = false
         return self.posts.count
@@ -58,7 +60,9 @@ class PostsListViewModel: PostsListPresenterProtocol {
             }
         }
     }
-    
+
+    // MARK: - network requests
+
     private func downloadPosts(completion: @escaping ([PostList]) -> Void) {
         self.networkManager.getPosts(page: self.page) { (_ response: ResponseData<PostList>)  in
             switch response {
